@@ -58,10 +58,12 @@ export default function Register() {
             if (result.success) {
                 navigate('/dashboard');
             } else {
-                setError(result.error || 'Registration failed');
+                console.error("Registration failed with reason:", result.error);
+                setError(result.error || 'Registration failed due to a server error. Please check the console.');
             }
         } catch (err) {
-            setError('An error occurred during registration');
+            console.error("Unexpected error in Register component:", err);
+            setError(`An unexpected error occurred during registration: ${err.message || 'Unknown error'}`);
         } finally {
             setIsLoading(false);
         }
