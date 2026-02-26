@@ -58,6 +58,7 @@ export default function Register() {
             if (result.success) {
                 navigate('/dashboard');
             } else {
+                // Log and show specific registration errors (e.g. from DB schema)
                 console.error("Registration failed with reason:", result.error);
                 setError(result.error || 'Registration failed due to a server error. Please check the console.');
             }
