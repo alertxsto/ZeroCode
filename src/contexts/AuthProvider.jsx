@@ -78,7 +78,7 @@ export const AuthProvider = ({ children }) => {
         try {
             const passwordHash = await bcrypt.hash(password, 10);
 
-            // Using explicit column names or basic ones for returning
+            // Using explicit or basic column names for the RETURNING clause
             // to avoid failing if non-critical columns (like avatar/phone) are missing
             const result = await sql`
                 INSERT INTO users (email, password_hash, name, is_admin, subscription_tier)
@@ -98,12 +98,12 @@ export const AuthProvider = ({ children }) => {
                 name: error.name,
                 stack: error.stack
             });
-            
+
             if (error.message.includes('duplicate key')) {
                 return { success: false, error: 'Email already registered' };
             }
             if (error.message.includes('column') && error.message.includes('does not exist')) {
-                 return { success: false, error: `Database Schema Error: ${error.message}. Please run the migration script.` };
+                return { success: false, error: `Database Schema Error: ${error.message}. Please run the migration script.` };
             }
             return { success: false, error: error.message || 'An unexpected database error occurred' };
         }

@@ -1,5 +1,5 @@
--- COMPREHENSIVE FIX: Registration & User Schema
--- Run this in your Neon SQL Editor
+-- COMPREHENSIVE FIX: Registration & User Schema Update
+-- Please run this in your Neon SQL Editor
 
 -- 1. Ensure all required columns exist in 'users' table
 DO $$
