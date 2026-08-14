@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { RiOrganizationChart, RiExpandDiagonalLine, RiCloseLine, RiDatabase2Line, RiFocus2Line, RiCodeBoxLine, RiGitMergeLine, RiCheckDoubleLine, RiExpandUpDownLine, RiSubtractLine, RiFullscreenLine } from 'react-icons/ri';
-import { SiHtml5, SiCss3, SiJavascript, SiReact, SiNodedotjs, SiPostgresql, SiVuedotjs, SiExpress, SiGit, SiTailwindcss, SiTypescript, SiMongodb, SiPython, SiNextdotjs, SiPhp, SiMysql } from 'react-icons/si';
+import { SiHtml5, SiCss, SiJavascript, SiReact, SiNodedotjs, SiPostgresql, SiVuedotjs, SiExpress, SiGit, SiTailwindcss, SiTypescript, SiMongodb, SiPython, SiNextdotjs, SiPhp, SiMysql } from 'react-icons/si';
 import { useProgress } from '../../contexts/ProgressProvider';
 import { getCourseWithContent } from '../../data/courses/index.js';
 import UpdateBadge from './UpdateBadge';
@@ -14,7 +14,7 @@ import clsx from 'clsx';
 
 const SKILL_MAP = {
     'html5': { name: 'HTML5', icon: SiHtml5, color: '#E44D26', code: 'HTM' },
-    'css3': { name: 'CSS3', icon: SiCss3, color: '#1572B6', code: 'CSS' },
+    'css3': { name: 'CSS3', icon: SiCss, color: '#1572B6', code: 'CSS' },
     'tailwind': { name: 'Tailwind', icon: SiTailwindcss, color: '#38B2AC', code: 'TWN' },
     'js-basics': { name: 'JavaScript', icon: SiJavascript, color: '#F7DF1E', code: 'JSB' },
     'js-es6': { name: 'ES6+', icon: SiJavascript, color: '#F7DF1E', code: 'JS6' },

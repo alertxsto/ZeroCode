@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, useRef, useCallback } from 'react';
 import { useAuth } from './AuthProvider';
-import { sql } from '../lib/neon';
+import { apiFetch } from '../lib/apiClient';
 import { CONTENT_TYPES } from '../data/curriculumStructure';
 import { getAllItems } from '../data/courses/index';
 
@@ -206,19 +206,11 @@ export const ProgressProvider = ({ children }) => {
         if (!user) return;
 
         try {
-            // Load completed courses
-            const courses = await sql`
-                SELECT course_id, version 
-                FROM course_progress 
-                WHERE user_id = ${user.id} AND completed = true
-            `;
-
-            // Load completed items with timestamps AND content info for XP
-            const items = await sql`
-                SELECT item_id, course_id, unit_id, completed_at
-                FROM item_progress 
-                WHERE user_id = ${user.id} AND completed = true
-            `;
+            // Fetch all progress server-side (courses, items, focus stats)
+            const data = await apiFetch('/api/progress');
+            const courses = data.courses || [];
+            const items = data.items || [];
+            const focusStats = data.focusStats || null;
 
             setCompletedCourses(courses.map(c => c.course_id));
 
@@ -346,27 +338,17 @@ export const ProgressProvider = ({ children }) => {
                 }
             }
 
-            // Load actual focus time from database
+            // Focus time comes from the server-side progress response
             let actualFocusMinutes = 0;
             let focusBreakdown = { doc: 0, lab: 0, quiz: 0, project: 0 };
-            try {
-                const statsResult = await sql`
-                    SELECT total_focus_minutes, focus_minutes_doc, focus_minutes_lab, focus_minutes_quiz, focus_minutes_project 
-                    FROM user_dashboard_stats 
-                    WHERE user_id = ${user.id}
-                `;
-                if (statsResult.length > 0) {
-                    actualFocusMinutes = statsResult[0].total_focus_minutes || 0;
-                    focusBreakdown = {
-                        doc: statsResult[0].focus_minutes_doc || 0,
-                        lab: statsResult[0].focus_minutes_lab || 0,
-                        quiz: statsResult[0].focus_minutes_quiz || 0,
-                        project: statsResult[0].focus_minutes_project || 0
-                    };
-                }
-            } catch (e) {
-                console.warn('Could not load focus time from DB');
-                // No fallback - focus time defaults to 0 if DB fails
+            if (focusStats) {
+                actualFocusMinutes = focusStats.total_focus_minutes || 0;
+                focusBreakdown = {
+                    doc: focusStats.focus_minutes_doc || 0,
+                    lab: focusStats.focus_minutes_lab || 0,
+                    quiz: focusStats.focus_minutes_quiz || 0,
+                    project: focusStats.focus_minutes_project || 0
+                };
             }
 
             const hours = Math.floor(actualFocusMinutes / 60);
@@ -397,16 +379,14 @@ export const ProgressProvider = ({ children }) => {
         }
     };
 
-    const markCourseComplete = async (courseId) => {
+    const markCourseComplete = async (courseId, version = '1.0.0') => {
         if (!user) return;
 
         try {
-            await sql`
-                INSERT INTO course_progress (user_id, course_id, completed, completed_at, version)
-                VALUES (${user.id}, ${courseId}, true, NOW(), ${version || '1.0.0'})
-                ON CONFLICT (user_id, course_id) 
-                DO UPDATE SET completed = true, completed_at = NOW(), version = EXCLUDED.version
-            `;
+            await apiFetch('/api/progress', {
+                method: 'POST',
+                body: { courseId, version, type: 'course' }
+            });
 
             const newCourses = [...new Set([...completedCourses, courseId])];
             setCompletedCourses(newCourses);
@@ -422,13 +402,10 @@ export const ProgressProvider = ({ children }) => {
         if (!user) return false;
 
         try {
-            const result = await sql`
-                INSERT INTO item_progress (user_id, item_id, course_id, unit_id, completed, completed_at)
-                VALUES (${user.id}, ${itemId}, ${courseId}, ${unitId}, true, NOW())
-                ON CONFLICT (user_id, item_id) 
-                DO UPDATE SET completed = true, completed_at = NOW()
-                RETURNING completed_at
-            `;
+            await apiFetch('/api/progress', {
+                method: 'POST',
+                body: { itemId, courseId, unitId }
+            });
 
             if (!completedItems.includes(itemId)) {
                 const newItems = [...completedItems, itemId];
@@ -488,17 +465,17 @@ export const ProgressProvider = ({ children }) => {
                 // UNIT COMPLETION CHECK
                 if (courseId && unitId) {
                     try {
-                        const unit = await sql`
-                            SELECT item_id FROM item_progress 
-                            WHERE user_id = ${user.id} AND course_id = ${courseId} AND unit_id = ${unitId} AND completed = true
-                        `;
+                        const freshData = await apiFetch('/api/progress');
+                        const unitItems = (freshData.items || []).filter(i =>
+                            i.course_id === courseId && i.unit_id === unitId
+                        );
 
                         // Get all items defined for this unit
                         const { getUnit } = await import('../data/courses/index');
                         const unitData = getUnit(courseId, unitId);
 
                         if (unitData && unitData.items.length > 0) {
-                            const completedUnitItems = unit.map(i => i.item_id);
+                            const completedUnitItems = unitItems.map(i => i.item_id);
                             const allCompleted = unitData.items.every(item =>
                                 completedUnitItems.includes(item.id) || item.id === itemId
                             );
@@ -617,9 +594,7 @@ export const ProgressProvider = ({ children }) => {
         if (!user) return;
 
         try {
-            await sql`DELETE FROM course_progress WHERE user_id = ${user.id}`;
-            await sql`DELETE FROM item_progress WHERE user_id = ${user.id}`;
-            await sql`DELETE FROM task_progress WHERE user_id = ${user.id}`;
+            await apiFetch('/api/progress', { method: 'DELETE' });
 
             setCompletedCourses([]);
             setCompletedItems([]);
@@ -713,34 +688,14 @@ export const ProgressProvider = ({ children }) => {
                 });
 
                 // Save to database - update both total and type-specific column
-                const columnMap = {
-                    doc: 'focus_minutes_doc',
-                    lab: 'focus_minutes_lab',
-                    quiz: 'focus_minutes_quiz',
-                    project: 'focus_minutes_project'
-                };
-
-                const column = columnMap[contentType] || 'focus_minutes_lab';
-
-                await sql`
-                    UPDATE user_dashboard_stats 
-                    SET total_focus_minutes = total_focus_minutes + ${elapsed},
-                        ${sql.unsafe(column)} = ${sql.unsafe(column)} + ${elapsed},
-                        last_activity_at = NOW(),
-                        updated_at = NOW()
-                    WHERE user_id = ${user.id}
-                `;
-
-                // Also log per-item for detailed breakdown (silently fail if table doesn't exist yet)
-                if (itemId && courseId) {
-                    try {
-                        await sql`
-                            INSERT INTO focus_time_log (user_id, item_id, course_id, unit_id, content_type, duration_minutes, started_at, ended_at)
-                            VALUES (${user.id}, ${itemId}, ${courseId}, ${unitId}, ${contentType}, ${elapsed}, ${new Date(Date.now() - elapsed * 60000).toISOString()}, NOW())
-                        `;
-                    } catch (logErr) {
-                        // Table might not exist yet, silently ignore
-                    }
+                // Server-side tracking (userId from session token, not body)
+                try {
+                    await apiFetch('/api/track-focus', {
+                        method: 'POST',
+                        body: { minutes: elapsed, type: contentType }
+                    });
+                } catch (focusErr) {
+                    console.error('Failed to save focus time:', focusErr);
                 }
             } catch (err) {
                 console.error('Failed to save focus time:', err);
@@ -757,9 +712,21 @@ export const ProgressProvider = ({ children }) => {
                 const elapsed = Math.floor((Date.now() - sessionStartRef.current) / 1000 / 60);
                 const contentType = currentContentTypeRef.current || 'lab';
                 if (elapsed > 0 && elapsed < 180) {
-                    // Use sendBeacon for reliable unload saving
-                    const data = JSON.stringify({ userId: user.id, minutes: elapsed, type: contentType });
-                    navigator.sendBeacon('/api/track-focus', data);
+                    // Use keepalive fetch (sendBeacon cannot send Authorization headers)
+                    try {
+                        const token = localStorage.getItem('zerocode_token');
+                        fetch('/api/track-focus', {
+                            method: 'POST',
+                            keepalive: true,
+                            headers: {
+                                'Content-Type': 'application/json',
+                                ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+                            },
+                            body: JSON.stringify({ minutes: elapsed, type: contentType })
+                        });
+                    } catch (beaconErr) {
+                        console.error('Focus beacon failed:', beaconErr);
+                    }
                 }
             }
         };

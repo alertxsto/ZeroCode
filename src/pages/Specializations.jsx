@@ -402,7 +402,7 @@ export default function Specializations() {
                                         {layer.courses.map(courseId => {
                                             const course = courses[courseId];
                                             const isCompleted = completedCourses.includes(courseId);
-                                            const isAvailable = checkPrerequisites(courseId, completedCourses, user?.email);
+                                            const isAvailable = checkPrerequisites(courseId, completedCourses);
                                             const isLocked = !isAvailable;
                                             const Icon = ICON_MAP[courseId] || RiCodeLine;
                                             const accent = PATHS[selectedPath.toUpperCase()].accent;

@@ -1,12 +1,12 @@
 import React, { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RiPlayCircleLine, RiArrowRightLine, RiFocus2Line, RiLoader4Line } from 'react-icons/ri';
-import { SiHtml5, SiCss3, SiJavascript, SiReact, SiNodedotjs, SiPostgresql, SiVuedotjs, SiExpress, SiGit, SiTailwindcss, SiTypescript, SiPython, SiNextdotjs, SiPhp, SiMysql, SiMongodb } from 'react-icons/si';
+import { SiHtml5, SiCss, SiJavascript, SiReact, SiNodedotjs, SiPostgresql, SiVuedotjs, SiExpress, SiGit, SiTailwindcss, SiTypescript, SiPython, SiNextdotjs, SiPhp, SiMysql, SiMongodb } from 'react-icons/si';
 import { useProgress } from '../../contexts/ProgressProvider';
 import { getCourse } from '../../data/curriculumStructure';
 
 const ICON_MAP = {
-    'html5': SiHtml5, 'css3': SiCss3, 'tailwind': SiTailwindcss, 'js-basics': SiJavascript,
+    'html5': SiHtml5, 'css3': SiCss, 'tailwind': SiTailwindcss, 'js-basics': SiJavascript,
     'js-es6': SiJavascript, 'typescript': SiTypescript, 'python': SiPython, 'react': SiReact,
     'vue': SiVuedotjs, 'node': SiNodedotjs, 'express': SiExpress, 'php': SiPhp,
     'nextjs': SiNextdotjs, 'mysql': SiMysql, 'mongodb': SiMongodb, 'postgresql': SiPostgresql,

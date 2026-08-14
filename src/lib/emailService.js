@@ -3,6 +3,16 @@ export const generateVerificationCode = () => {
     return Math.floor(100000 + Math.random() * 900000).toString();
 };
 
+// Resolve the app origin — serverless functions run in Node, so use APP_URL env;
+// browsers use window.location.origin.
+const getAppUrl = () => {
+    if (typeof window !== 'undefined' && window.location?.origin) {
+        return window.location.origin;
+    }
+    // eslint-disable-next-line no-undef
+    return (typeof process !== 'undefined' && process.env?.APP_URL) || 'http://localhost:5173';
+};
+
 // Send verification email via backend API
 export const sendVerificationEmail = async (email, verificationCode) => {
     try {
@@ -25,8 +35,8 @@ export const sendVerificationEmail = async (email, verificationCode) => {
 // Send password reset email with link
 export const sendPasswordResetEmail = async (email, resetCode) => {
     try {
-        const resetLink = `${window.location.origin}/reset-password?code=${resetCode}&email=${encodeURIComponent(email)}`;
-        
+        const resetLink = `${getAppUrl()}/reset-password?code=${resetCode}&email=${encodeURIComponent(email)}`;
+
         const response = await fetch('/api/send-password-reset-email', {
             method: 'POST',
             headers: {

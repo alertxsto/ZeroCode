@@ -2,15 +2,15 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { RiTimeLine, RiCloseLine, RiBookOpenLine, RiCodeBoxLine, RiQuestionLine, RiFolderLine } from 'react-icons/ri';
-import { SiHtml5, SiCss3, SiJavascript, SiReact, SiNodedotjs, SiPostgresql, SiVuedotjs, SiGit, SiTailwindcss, SiTypescript, SiMongodb, SiPython, SiNextdotjs, SiPhp, SiMysql } from 'react-icons/si';
+import { SiHtml5, SiCss, SiJavascript, SiReact, SiNodedotjs, SiPostgresql, SiVuedotjs, SiGit, SiTailwindcss, SiTypescript, SiMongodb, SiPython, SiNextdotjs, SiPhp, SiMysql } from 'react-icons/si';
 import { useProgress } from '../../contexts/ProgressProvider';
-import { sql } from '../../lib/neon';
+import { apiFetch } from '../../lib/apiClient';
 import { getCourseWithContent } from '../../data/courses/index.js';
 import clsx from 'clsx';
 
 const SKILL_MAP = {
     'html5': { name: 'HTML5', icon: SiHtml5, color: '#E44D26' },
-    'css3': { name: 'CSS3', icon: SiCss3, color: '#1572B6' },
+    'css3': { name: 'CSS3', icon: SiCss, color: '#1572B6' },
     'tailwind': { name: 'Tailwind', icon: SiTailwindcss, color: '#38B2AC' },
     'js-basics': { name: 'JavaScript', icon: SiJavascript, color: '#F7DF1E' },
     'js-es6': { name: 'ES6+', icon: SiJavascript, color: '#F7DF1E' },
@@ -49,13 +49,9 @@ export default function FocusDetailModal({ isOpen, onClose }) {
         const loadFocusData = async () => {
             setLoading(true);
             try {
-                // Try to get per-course breakdown from focus_time_log
-                const result = await sql`
-                    SELECT course_id, unit_id, content_type, SUM(duration_minutes) as total_minutes
-                    FROM focus_time_log
-                    GROUP BY course_id, unit_id, content_type
-                    ORDER BY course_id, unit_id
-                `;
+                // Per-course breakdown scoped to the authenticated user (server-side)
+                const data = await apiFetch('/api/stats/focus');
+                const result = data.focusLog || [];
 
                 // Group by course
                 const courseMap = {};
@@ -97,7 +93,7 @@ export default function FocusDetailModal({ isOpen, onClose }) {
                 if (courses.length > 0 && !selectedCourseId) {
                     setSelectedCourseId(courses[0].id);
                 }
-            } catch (err) {
+            } catch {
                 console.warn('Could not load focus log, using global stats');
                 // Fallback to global stats
             }

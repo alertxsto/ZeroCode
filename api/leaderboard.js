@@ -1,17 +1,20 @@
-import { sql } from '../src/lib/neon.js';
+import { sql } from './_lib/db.js';
+import { getUserFromRequest } from './_lib/auth.js';
 
 export default async function handler(req, res) {
+    if (req.method === 'OPTIONS') {
+        return res.status(200).end();
+    }
     if (req.method !== 'GET') {
         return res.status(405).json({ error: 'Method not allowed' });
     }
 
     try {
-        // Get top 100 users by points
+        // Get top 100 users by points (no email exposure)
         const leaderboard = await sql`
             SELECT 
                 id,
                 name,
-                email,
                 points,
                 courses_completed,
                 ROW_NUMBER() OVER (ORDER BY points DESC, courses_completed DESC) as rank
@@ -21,21 +24,20 @@ export default async function handler(req, res) {
             LIMIT 100
         `;
 
-        // Get user's rank from query params
-        const userId = req.query.userId;
+        // Get user's rank from session token if present
+        const user = await getUserFromRequest(req);
         let userRank = null;
 
-        if (userId) {
+        if (user) {
             const userRankResult = await sql`
                 SELECT 
                     id,
                     name,
-                    email,
                     points,
                     courses_completed,
                     ROW_NUMBER() OVER (ORDER BY points DESC, courses_completed DESC) as rank
                 FROM users
-                WHERE id = ${parseInt(userId)}
+                WHERE id = ${user.id}
             `;
 
             if (userRankResult.length > 0) {

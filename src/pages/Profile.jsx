@@ -6,7 +6,6 @@ import { useProgress } from '../contexts/ProgressProvider';
 import { getCourseProgress } from '../data/courses/index';
 import { courses } from '../data/curriculumStructure';
 import AppLayout from '../components/layout/AppLayout';
-import { sql } from '../lib/neon';
 import {
     RiEdit2Line, RiCameraLine, RiVipCrownLine, RiCheckLine, RiLoader4Line,
     RiPhoneLine, RiMailLine, RiCalendarLine, RiShieldKeyholeLine, RiLogoutBoxRLine,

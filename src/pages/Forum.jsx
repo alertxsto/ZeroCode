@@ -4,7 +4,7 @@ import AppLayout from '../components/layout/AppLayout';
 import { useAuth } from '../contexts/AuthProvider';
 import { useProgress } from '../contexts/ProgressProvider';
 import { getOverallProgress } from '../data/curriculumStructure';
-import { sql } from '../lib/neon';
+import { apiFetch } from '../lib/apiClient';
 import {
     MessageSquare, Plus, Search, ThumbsUp, MessageCircle,
     Clock, User, X, Send, ChevronRight, Hash, TrendingUp, Zap, Award
@@ -45,54 +45,8 @@ export default function Forum() {
 
     const fetchIntelligenceStream = async () => {
         try {
-            let result;
-            if (sortBy === 'top') {
-                result = await sql`
-                    SELECT 
-                        p.*,
-                        u.name as author_name,
-                        u.email as author_email,
-                        u.avatar as author_avatar,
-                        u.border as author_border,
-                        u.subscription_tier as author_tier,
-                        u.created_at as author_joined,
-                        (SELECT COUNT(*) FROM forum_replies WHERE post_id = p.id) as reply_count
-                    FROM forum_posts p
-                    JOIN users u ON p.user_id = u.id
-                    ORDER BY p.likes DESC
-                `;
-            } else if (sortBy === 'active') {
-                result = await sql`
-                    SELECT 
-                        p.*,
-                        u.name as author_name,
-                        u.email as author_email,
-                        u.avatar as author_avatar,
-                        u.border as author_border,
-                        u.subscription_tier as author_tier,
-                        u.created_at as author_joined,
-                        (SELECT COUNT(*) FROM forum_replies WHERE post_id = p.id) as reply_count
-                    FROM forum_posts p
-                    JOIN users u ON p.user_id = u.id
-                    ORDER BY reply_count DESC
-                `;
-            } else {
-                result = await sql`
-                    SELECT 
-                        p.*,
-                        u.name as author_name,
-                        u.email as author_email,
-                        u.avatar as author_avatar,
-                        u.border as author_border,
-                        u.subscription_tier as author_tier,
-                        u.created_at as author_joined,
-                        (SELECT COUNT(*) FROM forum_replies WHERE post_id = p.id) as reply_count
-                    FROM forum_posts p
-                    JOIN users u ON p.user_id = u.id
-                    ORDER BY p.created_at DESC
-                `;
-            }
-            setPosts(result);
+            const data = await apiFetch(`/api/forum?resource=posts&sortBy=${sortBy}`);
+            setPosts(data.posts || []);
         } catch (error) {
             console.error('Error loading posts:', error);
         } finally {
@@ -106,10 +60,10 @@ export default function Forum() {
 
         setSubmitting(true);
         try {
-            await sql`
-                INSERT INTO forum_posts (user_id, title, content, category)
-                VALUES (${user.id}, ${newPost.title}, ${newPost.content}, ${newPost.category})
-            `;
+            await apiFetch('/api/forum?resource=posts', {
+                method: 'POST',
+                body: { title: newPost.title, content: newPost.content, category: newPost.category }
+            });
             setNewPost({ title: '', content: '', category: 'general' });
             setShowNewPost(false);
             fetchIntelligenceStream();

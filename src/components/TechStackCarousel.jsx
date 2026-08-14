@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    SiHtml5, SiCss3, SiJavascript, SiTypescript, SiReact, SiVuedotjs,
+    SiHtml5, SiCss, SiJavascript, SiTypescript, SiReact, SiVuedotjs,
     SiNextdotjs, SiNodedotjs, SiExpress, SiPostgresql, SiMongodb,
     SiPython, SiTailwindcss, SiGit, SiDocker, SiRedis, SiGraphql,
     SiPhp, SiLinux, SiNginx
@@ -9,7 +9,7 @@ import clsx from 'clsx';
 
 const TECH_STACK = [
     { name: 'HTML5', icon: SiHtml5, color: 'text-orange-500' },
-    { name: 'CSS3', icon: SiCss3, color: 'text-blue-500' },
+    { name: 'CSS3', icon: SiCss, color: 'text-blue-500' },
     { name: 'JavaScript', icon: SiJavascript, color: 'text-yellow-400' },
     { name: 'TypeScript', icon: SiTypescript, color: 'text-blue-400' },
     { name: 'React', icon: SiReact, color: 'text-cyan-400' },

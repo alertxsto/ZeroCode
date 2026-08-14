@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import AppLayout from '../components/layout/AppLayout';
 import { useAuth } from '../contexts/AuthProvider';
-import { sql } from '../lib/neon';
+import { apiFetch } from '../lib/apiClient';
 import {
     ArrowLeft, ThumbsUp, MessageCircle, Clock, Send, Trash2, Edit2, X,
     ShieldAlert, Terminal, Share2, MoreHorizontal, CornerDownRight
@@ -61,12 +61,8 @@ export default function ForumPost() {
 
     const loadPost = async () => {
         try {
-            const result = await sql`
-                SELECT p.*, u.name as author_name, u.email as author_email, u.avatar as author_avatar, u.border as author_border, u.subscription_tier as author_tier, u.created_at as author_joined
-                FROM forum_posts p
-                JOIN users u ON p.user_id = u.id
-                WHERE p.id = ${postId}
-            `;
+            const data = await apiFetch(`/api/forum?resource=posts&id=${postId}`);
+            const result = [data.post];
             if (result.length > 0) {
                 setPost(result[0]);
                 setEditPostContent(result[0].content);
@@ -84,14 +80,8 @@ export default function ForumPost() {
 
     const loadReplies = async () => {
         try {
-            const result = await sql`
-                SELECT r.*, u.name as author_name, u.email as author_email, u.avatar as author_avatar, u.border as author_border, u.subscription_tier as author_tier, u.created_at as author_joined
-                FROM forum_replies r
-                JOIN users u ON r.user_id = u.id
-                WHERE r.post_id = ${postId}
-                ORDER BY r.created_at ASC
-            `;
-            setReplies(result);
+            const data = await apiFetch(`/api/forum?resource=replies&id=${postId}`);
+            setReplies(data.replies || []);
         } catch (error) {
             console.error('Error loading replies:', error);
         }
@@ -103,10 +93,10 @@ export default function ForumPost() {
 
         setSubmitting(true);
         try {
-            await sql`
-                INSERT INTO forum_replies (post_id, user_id, content)
-                VALUES (${postId}, ${user.id}, ${replyContent})
-            `;
+            await apiFetch('/api/forum?resource=replies', {
+                method: 'POST',
+                body: { postId, content: replyContent }
+            });
             setReplyContent('');
             loadReplies();
         } catch (error) {
@@ -119,11 +109,10 @@ export default function ForumPost() {
 
     const handleUpdatePost = async () => {
         try {
-            await sql`
-                UPDATE forum_posts 
-                SET title = ${editPostTitle}, content = ${editPostContent}
-                WHERE id = ${postId}
-            `;
+            await apiFetch(`/api/forum?resource=posts&id=${postId}`, {
+                method: 'PATCH',
+                body: { title: editPostTitle, content: editPostContent }
+            });
             setIsEditingPost(false);
             loadPost();
         } catch (error) {
@@ -134,11 +123,10 @@ export default function ForumPost() {
 
     const handleUpdateReply = async (replyId) => {
         try {
-            await sql`
-                UPDATE forum_replies
-                SET content = ${editReplyContent}
-                WHERE id = ${replyId}
-            `;
+            await apiFetch(`/api/forum?resource=replies&id=${replyId}`, {
+                method: 'PATCH',
+                body: { content: editReplyContent }
+            });
             setEditingReplyId(null);
             loadReplies();
         } catch (error) {
@@ -149,17 +137,7 @@ export default function ForumPost() {
 
     const handleLike = async () => {
         try {
-            const existing = await sql`
-                SELECT id FROM forum_likes WHERE post_id = ${postId} AND user_id = ${user.id}
-            `;
-
-            if (existing.length > 0) {
-                await sql`DELETE FROM forum_likes WHERE post_id = ${postId} AND user_id = ${user.id}`;
-                await sql`UPDATE forum_posts SET likes = likes - 1 WHERE id = ${postId}`;
-            } else {
-                await sql`INSERT INTO forum_likes (post_id, user_id) VALUES (${postId}, ${user.id})`;
-                await sql`UPDATE forum_posts SET likes = likes + 1 WHERE id = ${postId}`;
-            }
+            await apiFetch(`/api/forum?resource=likes&id=${postId}`, { method: 'POST' });
             loadPost();
         } catch (error) {
             console.error('Error toggling like:', error);
@@ -180,12 +158,10 @@ export default function ForumPost() {
 
         try {
             if (type === 'post') {
-                await sql`DELETE FROM forum_replies WHERE post_id = ${id}`;
-                await sql`DELETE FROM forum_likes WHERE post_id = ${id}`;
-                await sql`DELETE FROM forum_posts WHERE id = ${id}`;
+                await apiFetch(`/api/forum?resource=posts&id=${id}`, { method: 'DELETE' });
                 navigate('/community');
             } else if (type === 'reply') {
-                await sql`DELETE FROM forum_replies WHERE id = ${id}`;
+                await apiFetch(`/api/forum?resource=replies&id=${id}`, { method: 'DELETE' });
                 loadReplies();
             }
         } catch (error) {

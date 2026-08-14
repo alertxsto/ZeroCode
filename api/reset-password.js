@@ -1,10 +1,16 @@
-import { sql } from '../src/lib/neon.js';
+import { sql } from './_lib/db.js';
 import bcrypt from 'bcryptjs';
+import { rateLimitStrict } from './_lib/rateLimit.js';
 
 export default async function handler(req, res) {
+    if (req.method === 'OPTIONS') {
+        return res.status(200).end();
+    }
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method not allowed' });
     }
+
+    if (!rateLimitStrict(req, res, () => {})) return;
 
     const { email, code, newPassword } = req.body;
 
@@ -20,7 +26,7 @@ export default async function handler(req, res) {
         // Get user and check reset code
         const result = await sql`
             SELECT id, password_reset_code, password_reset_expires
-            FROM users WHERE email = ${email}
+            FROM users WHERE email = ${email.toLowerCase()}
         `;
 
         if (result.length === 0) {

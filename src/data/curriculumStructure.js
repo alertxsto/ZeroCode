@@ -262,19 +262,9 @@ export const getCoursesByLevel = (level) => {
 
 export const getCourse = (courseId) => courses[courseId] || null;
 
-export const checkPrerequisites = (courseId, completedCourses = [], userEmail = '') => {
+export const checkPrerequisites = (courseId, completedCourses = []) => {
     const course = courses[courseId];
     if (!course) return false;
-
-    // Admin accounts have access to all courses
-    // Check for admin email patterns: admin*@gmail.com, admin*@*, or any email containing 'admin'
-    if (userEmail) {
-        const emailLower = userEmail.toLowerCase();
-        if (emailLower.includes('admin')) {
-            console.log('🔓 Admin detected:', userEmail, '- All courses unlocked');
-            return true;
-        }
-    }
 
     // All beginner level courses are always accessible
     if (course.level === 'beginner') return true;

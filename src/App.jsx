@@ -18,7 +18,6 @@ import AdminDashboard from './pages/AdminDashboard';
 import AdminAccess from './pages/AdminAccess';
 import AdminRegexPlayground from './pages/AdminRegexPlayground';
 import Library from './pages/Library';
-import Migrate from './pages/Migrate';
 import Forum from './pages/Forum';
 import ForumPost from './pages/ForumPost';
 import Leaderboard from './pages/Leaderboard';
@@ -34,7 +33,6 @@ const ProtectedRoute = ({ children }) => {
     if (!user) return <Navigate to="/login" />;
     return children;
 };
-
 const AdminRoute = ({ children }) => {
     const { user, loading, isAdmin } = useAuth();
     if (loading) return null;
@@ -208,9 +206,6 @@ function App() {
                                     <Specializations />
                                 </ProtectedRoute>
                             } />
-
-                            {/* Temp Migration Route */}
-                            <Route path="/migrate" element={<Migrate />} />
 
                             {/* Catch all */}
                             <Route path="*" element={<Navigate to="/" />} />

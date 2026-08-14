@@ -21,85 +21,14 @@ export default function GithubCallback() {
             try {
                 setStatus('Exchanging Authorization Code...');
 
-                // CRITICAL: This requires a backend proxy to keep Client Secret safe.
-                // If you are using a service like Gatekeeper, set VITE_GITHUB_TOKEN_PROXY to that URL.
-                // E.g. https://my-gatekeeper.vercel.app/api/oauth/token
-                const proxyUrl = import.meta.env.VITE_GITHUB_TOKEN_PROXY;
-
-                if (!proxyUrl) {
-                    throw new Error('VITE_GITHUB_TOKEN_PROXY not configured. Cannot exchange code for token securely on frontend.');
-                }
-
-                // 1. Exchange Code for Token via Proxy
-                let fetchUrl = proxyUrl;
-                if (proxyUrl.includes('?')) {
-                    fetchUrl = `${proxyUrl}&code=${code}`;
-                } else {
-                    fetchUrl = `${proxyUrl}?code=${code}`;
-                }
-
-                // If proxyUrl ends with /:code (old gatekeeper style), fallback to that
-                if (proxyUrl.endsWith('/')) {
-                    // Clean up logic if user provided weird URL, but query param is standard for Vercel functions
-                    // Let's assume standard query param
-                }
-
-                const tokenResponse = await fetch(fetchUrl, {
-                    method: 'GET', // Or POST depending on your proxy implementation
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                });
-
-                if (!tokenResponse.ok) {
-                    throw new Error('Failed to exchange code for access token.');
-                }
-
-                const tokenData = await tokenResponse.json();
-                const accessToken = tokenData.token || tokenData.access_token; // Adjust based on proxy response structure
-
-                if (!accessToken) {
-                    throw new Error('Invalid response from token proxy.');
-                }
-
-                // 2. Fetch User Profile from GitHub
-                setStatus('Retrieving User Profile...');
-                const userResponse = await fetch('https://api.github.com/user', {
-                    headers: {
-                        'Authorization': `Bearer ${accessToken}`,
-                        'Accept': 'application/json'
-                    }
-                });
-
-                if (!userResponse.ok) {
-                    throw new Error('Failed to fetch GitHub profile.');
-                }
-
-                const profile = await userResponse.json();
-
-                // Fetch Email if not public
-                if (!profile.email) {
-                    const emailRes = await fetch('https://api.github.com/user/emails', {
-                        headers: {
-                            'Authorization': `Bearer ${accessToken}`,
-                            'Accept': 'application/json'
-                        }
-                    });
-                    if (emailRes.ok) {
-                        const emails = await emailRes.json();
-                        const primary = emails.find(e => e.primary && e.verified);
-                        if (primary) profile.email = primary.email;
-                    }
-                }
-
-                // 3. Login
-                setStatus('Updating Neural Records...');
-                const result = await loginWithGithub(profile);
+                // The server exchanges the code for a token and logs the user in
+                // (client secret never touches the browser)
+                const result = await loginWithGithub(code);
 
                 if (result.success) {
                     navigate('/dashboard');
                 } else {
-                    throw new Error(result.error || 'Database login failed.');
+                    throw new Error(result.error || 'GitHub login failed.');
                 }
 
             } catch (err) {

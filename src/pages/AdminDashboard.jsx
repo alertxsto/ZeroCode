@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthProvider, useAuth, SUBSCRIPTION_TIERS } from '../contexts/AuthProvider';
 import { useProgress } from '../contexts/ProgressProvider';
+import { apiFetch } from '../lib/apiClient';
 import TopNavbar from '../components/layout/TopNavbar';
 import {
     Users, Search, Check, X, Crown, Shield, ArrowLeft,
@@ -34,7 +35,7 @@ const TIER_OPTIONS = [
 
 export default function AdminDashboard() {
     const navigate = useNavigate();
-    const { isAdmin, getAllUsers, updateUserSubscription, getAdminAnalytics, getAdminActivity } = useAuth();
+    const { isAdmin } = useAuth();
     const { setUnitReward } = useProgress();
     const [users, setUsers] = useState([]);
     const [analytics, setAnalytics] = useState(null);
@@ -69,9 +70,9 @@ export default function AdminDashboard() {
 
         try {
             const [usersRes, analyticsRes, logsRes] = await Promise.allSettled([
-                getAllUsers(finalQuery),
-                getAdminAnalytics(),
-                getAdminActivity()
+                apiFetch(`/api/admin/users${finalQuery ? `?search=${encodeURIComponent(finalQuery)}` : ''}`),
+                apiFetch('/api/admin/analytics'),
+                apiFetch('/api/admin/analytics'),
             ]);
 
             if (usersRes.status === 'fulfilled' && usersRes.value.success) {
@@ -121,16 +122,18 @@ export default function AdminDashboard() {
         const { userId, tier } = pendingUpdate;
 
         setUpdating(true);
-        const result = await updateUserSubscription(userId, tier);
-
-        if (result.success) {
+        try {
+            await apiFetch('/api/admin/users', {
+                method: 'PATCH',
+                body: { userId, tier }
+            });
             setMessage({ type: 'success', text: `User ${pendingUpdate.userName} upgraded to ${tier}!` });
-            setEditingUser(null);
-            setNewTier('');
-            loadData();
-        } else {
-            setMessage({ type: 'error', text: result.error });
+        } catch (error) {
+            setMessage({ type: 'error', text: error.message });
         }
+        setEditingUser(null);
+        setNewTier('');
+        loadData();
         setUpdating(false);
         setIsConfirmOpen(false);
         setPendingUpdate(null);

@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { sql } from '../lib/neon';
+import { apiFetch } from '../lib/apiClient';
 import { useAuth } from './AuthProvider';
 import { SYSTEM_MANUAL } from '../data/neuralVaultTemplates';
 
@@ -17,13 +17,11 @@ export const NotesProvider = ({ children }) => {
         if (!user?.id) return;
         setLoading(true);
         try {
-            const foldersData = await sql`
-                SELECT * FROM user_folders WHERE user_id = ${user.id} ORDER BY name ASC
-            `;
-            const notesData = await sql`
-                SELECT * FROM user_notes WHERE user_id = ${user.id} ORDER BY last_modified DESC
-            `;
-            setFolders(foldersData);
+            const [foldersData, notesData] = await Promise.all([
+                apiFetch('/api/vault?resource=folders'),
+                apiFetch('/api/vault?resource=notes'),
+            ]);
+            setFolders(foldersData.folders || []);
 
             // Inject System Note
             const systemNote = {
@@ -36,7 +34,7 @@ export const NotesProvider = ({ children }) => {
                 last_modified: new Date().toISOString()
             };
 
-            setNotes([systemNote, ...notesData]);
+            setNotes([systemNote, ...(notesData.notes || [])]);
         } catch (error) {
             console.error('Error fetching vault:', error);
         } finally {
@@ -50,11 +48,11 @@ export const NotesProvider = ({ children }) => {
 
     const createFolder = async (name, parentId = null) => {
         try {
-            const [newFolder] = await sql`
-                INSERT INTO user_folders (user_id, name, parent_id)
-                VALUES (${user.id}, ${name}, ${parentId})
-                RETURNING *
-            `;
+            const data = await apiFetch('/api/vault?resource=folders', {
+                method: 'POST',
+                body: { name, parentId }
+            });
+            const newFolder = data.folder;
             setFolders(prev => [...prev, newFolder]);
             return { success: true, folder: newFolder };
         } catch (error) {
@@ -64,11 +62,11 @@ export const NotesProvider = ({ children }) => {
 
     const createNote = async (title, content = '', folderId = null) => {
         try {
-            const [newNote] = await sql`
-                INSERT INTO user_notes (user_id, title, content, folder_id)
-                VALUES (${user.id}, ${title}, ${content}, ${folderId})
-                RETURNING *
-            `;
+            const data = await apiFetch('/api/vault?resource=notes', {
+                method: 'POST',
+                body: { title, content, folderId }
+            });
+            const newNote = data.note;
             setNotes(prev => [newNote, ...prev]);
             return { success: true, note: newNote };
         } catch (error) {
@@ -78,16 +76,11 @@ export const NotesProvider = ({ children }) => {
 
     const updateNote = async (id, updates) => {
         try {
-            const [updatedNote] = await sql`
-                UPDATE user_notes
-                SET title = ${updates.title ?? undefined}, 
-                    content = ${updates.content ?? undefined},
-                    folder_id = ${updates.folderId ?? undefined},
-                    last_modified = CURRENT_TIMESTAMP
-                WHERE id = ${id} AND user_id = ${user.id}
-                RETURNING *
-            `;
-
+            const data = await apiFetch(`/api/vault?resource=notes&id=${id}`, {
+                method: 'PATCH',
+                body: updates
+            });
+            const updatedNote = data.note;
             setNotes(prev => prev.map(n => n.id === id ? updatedNote : n));
             return { success: true, note: updatedNote };
         } catch (error) {
@@ -97,7 +90,7 @@ export const NotesProvider = ({ children }) => {
 
     const deleteNote = async (id) => {
         try {
-            await sql`DELETE FROM user_notes WHERE id = ${id} AND user_id = ${user.id}`;
+            await apiFetch(`/api/vault?resource=notes&id=${id}`, { method: 'DELETE' });
             setNotes(prev => prev.filter(n => n.id !== id));
             return { success: true };
         } catch (error) {
@@ -107,12 +100,11 @@ export const NotesProvider = ({ children }) => {
 
     const updateFolder = async (id, name) => {
         try {
-            const [updatedFolder] = await sql`
-                UPDATE user_folders
-                SET name = ${name}
-                WHERE id = ${id} AND user_id = ${user.id}
-                RETURNING *
-            `;
+            const data = await apiFetch(`/api/vault?resource=folders&id=${id}`, {
+                method: 'PATCH',
+                body: { name }
+            });
+            const updatedFolder = data.folder;
             setFolders(prev => prev.map(f => f.id === id ? updatedFolder : f));
             return { success: true, folder: updatedFolder };
         } catch (error) {
@@ -122,9 +114,7 @@ export const NotesProvider = ({ children }) => {
 
     const deleteFolder = async (id) => {
         try {
-            // Check if folder has subfolders or notes (optional safety, or cascade)
-            // Cascade delete on DB handles it, but let's be UI friendly
-            await sql`DELETE FROM user_folders WHERE id = ${id} AND user_id = ${user.id}`;
+            await apiFetch(`/api/vault?resource=folders&id=${id}`, { method: 'DELETE' });
             setFolders(prev => prev.filter(f => f.id !== id));
             setNotes(prev => prev.filter(n => n.folder_id !== id)); // Remove notes locally
             return { success: true };

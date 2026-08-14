@@ -32,20 +32,11 @@ export default function Login() {
         setIsLoading(true);
 
         try {
-            // Fetch User Info using Access Token
-            const userInfoRes = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-                headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
-            });
-            const userInfo = await userInfoRes.json();
-
-            const result = await loginWithGoogle(userInfo);
+            // Pass the raw access token — the server verifies it with Google
+            const result = await loginWithGoogle({ access_token: tokenResponse.access_token });
 
             if (result.success) {
-                if (result.needsVerification) {
-                    navigate('/verify-email', { state: { email: result.user.email } });
-                } else {
-                    navigate('/dashboard');
-                }
+                navigate('/dashboard');
             } else {
                 setError(result.error || 'Google login failed');
             }

@@ -35,7 +35,7 @@ export default async function handler(request, response) {
 
         const data = await tokenResponse.json();
         return response.status(200).json(data);
-    } catch (error) {
+    } catch {
         return response.status(500).json({ error: 'Internal Server Error' });
     }
 }

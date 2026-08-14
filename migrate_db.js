@@ -1,4 +1,4 @@
-import { sql } from './src/lib/neon.js';
+import { sql } from './api/_lib/db.js';
 
 const runMigration = async () => {
     try {
