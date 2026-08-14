@@ -120,7 +120,7 @@ const server = http.createServer(async (req, res) => {
                 return;
             }
 
-            if (req.url === '/api/send-verification-email') {
+            if (req.url === '/api/email/verification') {
                 const { verificationCode } = data;
                 console.log(`Sending verification email to ${email}...`);
 
@@ -149,7 +149,7 @@ const server = http.createServer(async (req, res) => {
                 res.writeHead(200);
                 res.end(JSON.stringify({ success: true, message: 'Verification email sent' }));
 
-            } else if (req.url === '/api/send-password-reset-email') {
+            } else if (req.url === '/api/email/password-reset') {
                 const { resetCode, resetLink } = data;
                 console.log(`Sending password reset email to ${email}...`);
 
@@ -181,7 +181,7 @@ const server = http.createServer(async (req, res) => {
                 res.writeHead(200);
                 res.end(JSON.stringify({ success: true, message: 'Password reset email sent' }));
 
-            } else if (req.url === '/api/send-welcome-email') {
+            } else if (req.url === '/api/email/welcome') {
                 const { name } = data;
                 console.log(`Sending welcome email to ${email}...`);
 
