@@ -1,4 +1,5 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { PRICING, formatPrice } from "./pricing";
 
 /**
  * Gemini Service to handle AI interactions
@@ -22,6 +23,9 @@ export const geminiService = {
             // Using 'gemini-flash-latest' as it's the most stable alias for free tier
             const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
 
+            const pricingTiers = Object.values(PRICING)
+                .map((p, i) => `${i + 1}. **${p.name} - ${formatPrice(p.price)}** (${p.courseCount} courses)`)
+                .join("\n");
 
             const systemInstruction = `
                 You are "Nebula", an elite AI coding tutor and platform guide for ZeroCode.
@@ -36,18 +40,7 @@ export const geminiService = {
                 - We offer LIFETIME ACCESS with a one-time payment (No subscriptions).
                 
                 **PRICING TIERS:**
-                1. **Starter (Beginner) - Rp 50.000**
-                   - HTML, CSS, JS, Git, Tailwind.
-                   - Perfect for absolute beginners.
-                2. **Developer (Intermediate) - Rp 75.000**
-                   - React, PHP, SQL, Python.
-                   - Build real apps.
-                3. **Professional (Advanced) - Rp 80.000**
-                   - TypeScript, Node.js, Next.js, DevOps, MongoDB.
-                   - Full-stack mastery.
-                4. **Master Key Bundle (Elite) - Rp 164.000**
-                   - UNLOCK EVERYTHING (All 16 courses + Future updates).
-                   - Best value (Save 20%).
+                ${pricingTiers}
                 
                 **KEY FEATURES:**
                 - Browser-based IDE (No setup needed).

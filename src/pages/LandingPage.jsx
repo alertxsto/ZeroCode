@@ -6,65 +6,15 @@ import { RiVipCrownFill, RiCheckFill, RiGithubFill } from 'react-icons/ri';
 import clsx from 'clsx';
 import DNAPricing from '../components/DNAPricing';
 import TechStackCarousel from '../components/TechStackCarousel';
-
-const PRICING = {
-    starter: {
-        name: 'Starter Pack',
-        price: 149000,
-        originalPrice: 199000,
-        description: 'Foundation Access',
-        courses: 5,
-        features: [
-            'HTML5 & CSS3 Protocols',
-            'JavaScript Core',
-            'Git Version Control',
-            'Tailwind Styling',
-            'Lifetime Database Access'
-        ]
-    },
-    developer: {
-        name: 'Developer Pro',
-        price: 299000,
-        originalPrice: 449000,
-        description: 'Standard Operation',
-        courses: 13,
-        popular: true,
-        features: [
-            'All Starter Modules',
-            'React & Vue Frameworks',
-            'Node.js Server Side',
-            'SQL/NoSQL Integration',
-            'Python Scripting'
-        ]
-    },
-    elite: {
-        name: 'Full Stack Elite',
-        price: 549000,
-        originalPrice: 799000,
-        description: 'Root Access Granted',
-        courses: 19,
-        features: [
-            'All Developer Modules',
-            'TypeScript Safety',
-            'Cloud Infrastructure',
-            'Next.js Rendering',
-            'DevOps Pipelines'
-        ]
-    }
-};
-
-const WHATSAPP_NUMBER = '6283875727384';
+import { PRICING, buildPurchaseMessage, whatsappLink } from '../lib/pricing';
 
 export default function LandingPage() {
     const navigate = useNavigate();
     const { user } = useAuth();
 
     const handleBuy = (tier) => {
-        const plan = PRICING[tier];
-        const message = encodeURIComponent(
-            `[SYSTEM_REQUEST]: Initialize purchase for ${plan.name} (Rp ${plan.price.toLocaleString('id-ID')})\n\nUSER_ID: ${user?.email || 'GUEST'}\nUSER_NAME: ${user?.name || 'UNKNOWN'}`
-        );
-        window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, '_blank');
+        const message = buildPurchaseMessage(tier, user);
+        window.open(whatsappLink(message), '_blank');
     };
 
     return (

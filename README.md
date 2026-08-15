@@ -519,7 +519,7 @@ zerocode/
 
 ### **Step 1: Clone Repository**
 ```bash
-git clone https://github.com/dkycdr/ZeroCode.git
+git clone https://github.com/alertxsto/ZeroCode.git
 cd zerocode
 ```
 
@@ -685,25 +685,6 @@ $ git blame        # Show authors
 | ⭐ **Pro** | ![pro](https://img.shields.io/badge/PRO-3b82f6?style=flat-square) | Unlimited posts, voting |
 | 💎 **Elite** | ![elite](https://img.shields.io/badge/ELITE-f59e0b?style=flat-square) | Pin posts, badges |
 | 👑 **Admin** | ![admin](https://img.shields.io/badge/ADMIN-ef4444?style=flat-square) | Full moderation |
-
-</div>
-
----
-
-## 📊 **PLATFORM STATISTICS**
-
-<div align="center">
-
-```
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃                                                               ┃
-┃   👥 ACTIVE USERS          1,247    │   📈 GROWTH      +32%  ┃
-┃   ✅ COMPLETED COURSES       892    │   🎯 AVG PROGRESS  43%  ┃
-┃   💻 CODE SUBMISSIONS    24,567    │   🤖 AI QUERIES 15,234  ┃
-┃   🔥 LONGEST STREAK         89d    │   ⚡ TOTAL XP    2.4M   ┃
-┃                                                               ┃
-┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-```
 
 </div>
 
@@ -1071,44 +1052,17 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 
 ### **FOUND A BUG?**
 
-[![Report Bug](https://img.shields.io/badge/🐛_REPORT_BUG-ef4444?style=for-the-badge&labelColor=0a0e27)](https://github.com/dkycdr/ZeroCode/issues)
-[![Request Feature](https://img.shields.io/badge/💡_REQUEST_FEATURE-8b5cf6?style=for-the-badge&labelColor=0a0e27)](https://github.com/dkycdr/ZeroCode/issues)
+[![Report Bug](https://img.shields.io/badge/🐛_REPORT_BUG-ef4444?style=for-the-badge&labelColor=0a0e27)](https://github.com/alertxsto/ZeroCode/issues)
+[![Request Feature](https://img.shields.io/badge/💡_REQUEST_FEATURE-8b5cf6?style=for-the-badge&labelColor=0a0e27)](https://github.com/alertxsto/ZeroCode/issues)
 [![Join Discord](https://img.shields.io/badge/💬_JOIN_DISCORD-5865f2?style=for-the-badge&logo=discord&logoColor=white&labelColor=0a0e27)](#)
 
 </div>
 
 ---
 
-## 🎓 **TESTIMONIALS**
+## 🎓 **CONTRIBUTORS**
 
-<table>
-<tr>
-<td width="33%">
-
-> "ZeroCode transformed my learning experience. The cyberpunk UI keeps me engaged, and the hands-on labs are incredible!"
-> 
-> **— Alex Chen** ⭐⭐⭐⭐⭐  
-> *Full-Stack Developer*
-
-</td>
-<td width="33%">
-
-> "The AI chatbot Nebula is a game-changer. It's like having a personal mentor available 24/7. Highly recommended!"
-> 
-> **— Sarah Martinez** ⭐⭐⭐⭐⭐  
-> *Frontend Developer*
-
-</td>
-<td width="33%">
-
-> "Best coding platform I've used. The gamification system keeps me motivated, and I love the virtual Git environment!"
-> 
-> **— David Kim** ⭐⭐⭐⭐⭐  
-> *Backend Engineer*
-
-</td>
-</tr>
-</table>
+- Maintainer: [alertxsto](https://github.com/alertxsto)
 
 ---
 
@@ -1116,15 +1070,15 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 
 <div align="center">
 
-![GitHub stars](https://img.shields.io/github/stars/dkycdr/ZeroCode?style=for-the-badge&logo=github&color=00ff9f&labelColor=0a0e27)
-![GitHub forks](https://img.shields.io/github/forks/dkycdr/ZeroCode?style=for-the-badge&logo=github&color=00d9ff&labelColor=0a0e27)
-![GitHub issues](https://img.shields.io/github/issues/dkycdr/ZeroCode?style=for-the-badge&logo=github&color=ff00ff&labelColor=0a0e27)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/dkycdr/ZeroCode?style=for-the-badge&logo=github&color=ffff00&labelColor=0a0e27)
+![GitHub stars](https://img.shields.io/github/stars/alertxsto/ZeroCode?style=for-the-badge&logo=github&color=00ff9f&labelColor=0a0e27)
+![GitHub forks](https://img.shields.io/github/forks/alertxsto/ZeroCode?style=for-the-badge&logo=github&color=00d9ff&labelColor=0a0e27)
+![GitHub issues](https://img.shields.io/github/issues/alertxsto/ZeroCode?style=for-the-badge&logo=github&color=ff00ff&labelColor=0a0e27)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/alertxsto/ZeroCode?style=for-the-badge&logo=github&color=ffff00&labelColor=0a0e27)
 
-![GitHub last commit](https://img.shields.io/github/last-commit/dkycdr/ZeroCode?style=for-the-badge&logo=github&color=00ff9f&labelColor=0a0e27)
-![GitHub language count](https://img.shields.io/github/languages/count/dkycdr/ZeroCode?style=for-the-badge&logo=github&color=00d9ff&labelColor=0a0e27)
-![GitHub top language](https://img.shields.io/github/languages/top/dkycdr/ZeroCode?style=for-the-badge&logo=javascript&color=ff00ff&labelColor=0a0e27)
-![GitHub code size](https://img.shields.io/github/languages/code-size/dkycdr/ZeroCode?style=for-the-badge&logo=github&color=ffff00&labelColor=0a0e27)
+![GitHub last commit](https://img.shields.io/github/last-commit/alertxsto/ZeroCode?style=for-the-badge&logo=github&color=00ff9f&labelColor=0a0e27)
+![GitHub language count](https://img.shields.io/github/languages/count/alertxsto/ZeroCode?style=for-the-badge&logo=github&color=00d9ff&labelColor=0a0e27)
+![GitHub top language](https://img.shields.io/github/languages/top/alertxsto/ZeroCode?style=for-the-badge&logo=javascript&color=ff00ff&labelColor=0a0e27)
+![GitHub code size](https://img.shields.io/github/languages/code-size/alertxsto/ZeroCode?style=for-the-badge&logo=github&color=ffff00&labelColor=0a0e27)
 
 </div>
 
@@ -1147,36 +1101,9 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 
 ---
 
-## 🏅 **ACHIEVEMENTS**
-
-<div align="center">
-
-```ascii
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃                                                              ┃
-┃   🏆 Best EdTech Platform 2024 - Tech Innovation Awards     ┃
-┃   ⭐ 4.9/5 Stars - ProductHunt Launch                        ┃
-┃   🎖️  Featured on GitHub Trending - December 2024           ┃
-┃   💎 Top 10 Coding Platforms - Dev.to Community Choice      ┃
-┃   🚀 1000+ Active Students in First Month                   ┃
-┃                                                              ┃
-┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-```
-
-</div>
-
----
-
 ## 🔒 **SECURITY**
 
-We take security seriously. If you discover a security vulnerability, please email us at:
-
-**security@zerocode.dev**
-
-```
-PGP Key: 4096R/ABCD1234
-Fingerprint: 1234 5678 9ABC DEF0 1234 5678 9ABC DEF0 1234 5678
-```
+We take security seriously. If you discover a security vulnerability, please report it via GitHub Issues or email us.
 
 ---
 
@@ -1186,7 +1113,7 @@ Fingerprint: 1234 5678 9ABC DEF0 1234 5678 9ABC DEF0 1234 5678
 
 Special thanks to our supporters and contributors!
 
-[![Contributors](https://img.shields.io/github/contributors/dkycdr/ZeroCode?style=for-the-badge&color=00ff9f&labelColor=0a0e27)](https://github.com/dkycdr/ZeroCode/graphs/contributors)
+[![Contributors](https://img.shields.io/github/contributors/alertxsto/ZeroCode?style=for-the-badge&color=00ff9f&labelColor=0a0e27)](https://github.com/alertxsto/ZeroCode/graphs/contributors)
 
 ### **POWERED BY**
 
@@ -1221,9 +1148,9 @@ Special thanks to our supporters and contributors!
 
 ---
 
-[![Star this repo](https://img.shields.io/badge/⭐_STAR_THIS_REPO-00ff9f?style=for-the-badge&labelColor=0a0e27)](https://github.com/dkycdr/ZeroCode)
-[![Follow on GitHub](https://img.shields.io/badge/👤_FOLLOW_ON_GITHUB-00d9ff?style=for-the-badge&labelColor=0a0e27)](https://github.com/dkycdr)
-[![Share on Twitter](https://img.shields.io/badge/🐦_SHARE_ON_TWITTER-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white&labelColor=0a0e27)](https://twitter.com/intent/tweet?text=Check%20out%20ZeroCode%20-%20Cyberpunk%20Coding%20Academy!&url=https://github.com/dkycdr/ZeroCode)
+[![Star this repo](https://img.shields.io/badge/⭐_STAR_THIS_REPO-00ff9f?style=for-the-badge&labelColor=0a0e27)](https://github.com/alertxsto/ZeroCode)
+[![Follow on GitHub](https://img.shields.io/badge/👤_FOLLOW_ON_GITHUB-00d9ff?style=for-the-badge&labelColor=0a0e27)](https://github.com/alertxsto)
+[![Share on Twitter](https://img.shields.io/badge/🐦_SHARE_ON_TWITTER-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white&labelColor=0a0e27)](https://twitter.com/intent/tweet?text=Check%20out%20ZeroCode%20-%20Cyberpunk%20Coding%20Academy!&url=https://github.com/alertxsto/ZeroCode)
 
 </div>
 

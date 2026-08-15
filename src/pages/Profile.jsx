@@ -16,8 +16,7 @@ import { VscCode } from 'react-icons/vsc';
 import clsx from 'clsx';
 import AvatarWithBorder from '../components/common/AvatarWithBorder';
 import RealisticDNA from '../components/RealisticDNA';
-
-const WHATSAPP_NUMBER = '6283875727384';
+import { whatsappLink } from '../lib/pricing';
 
 const TIER_STYLES = {
     free: { label: 'Explorer', gradient: 'from-zinc-500 to-zinc-400', glow: 'shadow-zinc-500/20' },
@@ -85,10 +84,16 @@ export default function Profile() {
     };
 
     const handleUpgrade = () => {
-        const message = encodeURIComponent(
-            `Hi ZeroCode! I want to upgrade my account.\n\nEmail: ${user?.email}\nName: ${user?.name}\nCurrent tier: ${subscriptionTier}`
-        );
-        window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, '_blank');
+        const message = [
+            'Hi ZeroCode! I want to upgrade my account.',
+            '',
+            `Email: ${user?.email}`,
+            `Name: ${user?.name}`,
+            `Current tier: ${subscriptionTier}`,
+            '',
+            'Please send me the payment instructions and I will confirm once transferred.'
+        ].join('\n');
+        window.open(whatsappLink(message), '_blank');
     };
 
     // Calculate Stats
@@ -506,6 +511,13 @@ export default function Profile() {
                                                 <RiVipCrownFill size={16} /> UPGRADE_CLEARANCE
                                             </span>
                                         </button>
+                                        <p className="text-[9px] text-gray-600 text-center leading-relaxed font-mono">
+                                            HOW_TO_ACTIVATE:<br />
+                                            1. Send the WA message above<br />
+                                            2. Transfer to the account given by admin<br />
+                                            3. Reply with your transfer receipt<br />
+                                            4. Access granted within 24h
+                                        </p>
                                     </div>
                                 ) : (
                                     <div className="bg-emerald-900/10 border border-emerald-500/20 rounded-sm p-4 flex items-center gap-3">

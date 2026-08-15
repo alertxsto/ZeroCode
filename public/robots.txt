@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /login
+Disallow: /register
+Disallow: /admin
+
+Sitemap: https://zerocode.web.id/sitemap.xml

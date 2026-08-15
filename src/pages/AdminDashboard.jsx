@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthProvider, useAuth, SUBSCRIPTION_TIERS } from '../contexts/AuthProvider';
 import { useProgress } from '../contexts/ProgressProvider';
 import { apiFetch } from '../lib/apiClient';
+import { PRICING, formatPrice } from '../lib/pricing';
 import TopNavbar from '../components/layout/TopNavbar';
 import {
     Users, Search, Check, X, Crown, Shield, ArrowLeft,
@@ -26,10 +27,10 @@ const TIER_COLORS = {
 
 const TIER_OPTIONS = [
     { value: 'free', label: 'Free (Demo)' },
-    { value: 'beginner', label: 'Beginner (50K)' },
-    { value: 'intermediate', label: 'Intermediate (75K)' },
-    { value: 'advanced', label: 'Advanced (80K)' },
-    { value: 'fullstack', label: 'Fullstack (164K)' },
+    { value: 'beginner', label: `Beginner (${formatPrice(PRICING.starter.price)})` },
+    { value: 'intermediate', label: `Intermediate (${formatPrice(PRICING.developer.price)})` },
+    { value: 'advanced', label: `Advanced (${formatPrice(PRICING.professional.price)})` },
+    { value: 'fullstack', label: `Fullstack (${formatPrice(PRICING.master.price)})` },
     { value: 'admin', label: 'Admin' }
 ];
 

@@ -98,7 +98,7 @@ function PricingCard({ plan, planKey, index, onSelect, user }) {
                             </span>
                         </div>
                         <div className="text-xs text-gray-500 font-mono mt-1 flex justify-between">
-                            <span>CREDITS_REQ</span>
+                            <span>{plan.courseCount} COURSES</span>
                             <span className="line-through opacity-50">{(plan.originalPrice / 1000).toFixed(0)}K</span>
                         </div>
                         {/* Decorative HUD Lines */}
@@ -158,7 +158,8 @@ export default function DNAPricing({ pricing, onSelectPlan, user }) {
     const plans = [
         { key: 'starter', data: pricing.starter },
         { key: 'developer', data: pricing.developer },
-        { key: 'elite', data: pricing.elite }
+        { key: 'professional', data: pricing.professional },
+        { key: 'master', data: pricing.master }
     ];
 
     return (
