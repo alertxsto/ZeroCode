@@ -8,7 +8,7 @@ import {
     RiFlashlightLine,
     RiUser3Line,
     RiLogoutBoxLine,
-    RiSettings4Line,
+    RiHistoryLine,
     RiShieldKeyholeLine
 } from 'react-icons/ri';
 import clsx from 'clsx';
@@ -24,12 +24,12 @@ export default function Sidebar() {
         { path: '/resources', label: 'Library', icon: RiBookOpenLine },
         { path: '/community', label: 'Community', icon: RiDiscussLine },
         { path: '/leaderboard', label: 'Leaderboard', icon: RiTrophyLine },
+        { path: '/updates', label: 'Updates', icon: RiHistoryLine },
         { path: '/features', label: 'Features', icon: RiFlashlightLine },
     ];
 
     const bottomItems = [
         { path: '/profile', label: 'Profile', icon: RiUser3Line },
-        { path: '/settings', label: 'Settings', icon: RiSettings4Line },
     ];
 
     return (

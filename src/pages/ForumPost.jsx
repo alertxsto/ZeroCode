@@ -346,12 +346,12 @@ export default function ForumPost() {
 
                                         <div className="flex items-center gap-2">
                                             {canEditPost && !isEditingPost && (
-                                                <button onClick={() => setIsEditingPost(true)} className="p-2 text-gray-500 hover:text-white transition-colors">
+                                                <button onClick={() => setIsEditingPost(true)} aria-label="Edit post" className="p-2 text-gray-500 hover:text-white transition-colors">
                                                     <Edit2 size={16} />
                                                 </button>
                                             )}
                                             {canDeletePost && (
-                                                <button onClick={handleDeletePost} className="p-2 text-gray-500 hover:text-red-500 transition-colors">
+                                                <button onClick={handleDeletePost} aria-label="Delete post" className="p-2 text-gray-500 hover:text-red-500 transition-colors">
                                                     <Trash2 size={16} />
                                                 </button>
                                             )}
@@ -370,7 +370,7 @@ export default function ForumPost() {
                                                 />
                                                 <div className="flex justify-end gap-4">
                                                     <button onClick={() => setIsEditingPost(false)} className="text-xs font-mono text-gray-500 hover:text-white">CANCEL</button>
-                                                    <button onClick={handleUpdatePost} className="px-6 py-2 bg-white text-black text-xs font-bold uppercase hover:bg-cyan-400 transition-colors">SAVE_CHANGES</button>
+                                                    <button onClick={handleUpdatePost} className="px-6 py-2 bg-cyan-500 text-black text-xs font-bold uppercase hover:bg-cyan-400 transition-colors">SAVE_CHANGES</button>
                                                 </div>
                                             </>
                                         ) : (
@@ -453,10 +453,10 @@ export default function ForumPost() {
                                                                     </div>
                                                                     <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                                                         {canEditReply && !isEditingThis && (
-                                                                            <button onClick={() => { setEditingReplyId(reply.id); setEditReplyContent(reply.content); }} className="text-gray-500 hover:text-white"><Edit2 size={12} /></button>
+                                                                            <button onClick={() => { setEditingReplyId(reply.id); setEditReplyContent(reply.content); }} aria-label="Edit reply" className="text-gray-500 hover:text-white"><Edit2 size={12} /></button>
                                                                         )}
                                                                         {canDeleteReply && !isEditingThis && (
-                                                                            <button onClick={() => handleDeleteReply(reply.id)} className="text-gray-500 hover:text-red-500"><Trash2 size={12} /></button>
+                                                                            <button onClick={() => handleDeleteReply(reply.id)} aria-label="Delete reply" className="text-gray-500 hover:text-red-500"><Trash2 size={12} /></button>
                                                                         )}
                                                                     </div>
                                                                 </div>
@@ -471,7 +471,7 @@ export default function ForumPost() {
                                                                         />
                                                                         <div className="flex justify-end gap-3">
                                                                             <button onClick={() => setEditingReplyId(null)} className="text-[10px] text-gray-500">CANCEL</button>
-                                                                            <button onClick={() => handleUpdateReply(reply.id)} className="text-[10px] bg-white text-black px-3 py-1 font-bold">UPDATE</button>
+                                                                            <button onClick={() => handleUpdateReply(reply.id)} className="text-[10px] bg-cyan-500 text-black px-3 py-1 font-bold rounded-md">UPDATE</button>
                                                                         </div>
                                                                     </div>
                                                                 ) : (
@@ -533,7 +533,7 @@ export default function ForumPost() {
                                     <button
                                         type="submit"
                                         disabled={submitting || !replyContent.trim()}
-                                        className="h-9 px-4 bg-white text-black text-[10px] font-black uppercase tracking-widest hover:bg-cyan-400 transition-all disabled:opacity-30 disabled:hover:bg-zinc-800 disabled:hover:text-zinc-500 rounded flex items-center gap-2"
+                                        className="h-9 px-4 bg-cyan-500 text-black text-[10px] font-black uppercase tracking-widest hover:bg-cyan-400 transition-all disabled:opacity-30 rounded-md flex items-center gap-2"
                                     >
                                         <span>SEND</span>
                                         <CornerDownRight size={12} strokeWidth={3} />

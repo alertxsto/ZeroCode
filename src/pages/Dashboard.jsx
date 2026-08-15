@@ -26,8 +26,23 @@ export default function Dashboard() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-500"></div>
+            <div className="min-h-screen bg-zinc-950 p-8">
+                <div className="max-w-7xl mx-auto space-y-6" aria-busy="true" aria-label="Loading dashboard">
+                    {/* Hero skeleton */}
+                    <div className="h-40 bg-zinc-900/60 border border-white/5 rounded-lg animate-pulse" />
+                    {/* Stats row skeleton */}
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        {[...Array(4)].map((_, i) => (
+                            <div key={i} className="h-24 bg-zinc-900/60 border border-white/5 rounded-lg animate-pulse" />
+                        ))}
+                    </div>
+                    {/* Course cards skeleton */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        {[...Array(6)].map((_, i) => (
+                            <div key={i} className="h-40 bg-zinc-900/60 border border-white/5 rounded-lg animate-pulse" />
+                        ))}
+                    </div>
+                </div>
             </div>
         );
     }

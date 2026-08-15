@@ -165,7 +165,7 @@ export default function Register() {
                                 <div className="space-y-2 col-span-2 sm:col-span-1">
                                     <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest font-mono">Operative_Name</label>
                                     <div className="relative group">
-                                        <div className="absolute left-0 top-0 bottom-0 w-10 flex items-center justify-center text-gray-600 group-focus-within:text-purple-400 transition-colors border-r border-white/5 bg-white/5">
+                                        <div className="absolute left-0 top-0 bottom-0 w-10 flex items-center justify-center text-gray-600 group-focus-within:text-cyan-400 transition-colors border-r border-white/5 bg-white/5">
                                             <RiUser3Fill size={16} />
                                         </div>
                                         <input
@@ -181,7 +181,7 @@ export default function Register() {
                                 <div className="space-y-2 col-span-2 sm:col-span-1">
                                     <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest font-mono">Email_Frequency</label>
                                     <div className="relative group">
-                                        <div className="absolute left-0 top-0 bottom-0 w-10 flex items-center justify-center text-gray-600 group-focus-within:text-purple-400 transition-colors border-r border-white/5 bg-white/5">
+                                        <div className="absolute left-0 top-0 bottom-0 w-10 flex items-center justify-center text-gray-600 group-focus-within:text-cyan-400 transition-colors border-r border-white/5 bg-white/5">
                                             <RiMailFill size={16} />
                                         </div>
                                         <input
@@ -200,7 +200,7 @@ export default function Register() {
                                 <div className="space-y-2 col-span-2 sm:col-span-1">
                                     <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest font-mono">Set_Passkey</label>
                                     <div className="relative group">
-                                        <div className="absolute left-0 top-0 bottom-0 w-10 flex items-center justify-center text-gray-600 group-focus-within:text-purple-400 transition-colors border-r border-white/5 bg-white/5">
+                                        <div className="absolute left-0 top-0 bottom-0 w-10 flex items-center justify-center text-gray-600 group-focus-within:text-cyan-400 transition-colors border-r border-white/5 bg-white/5">
                                             <RiLockPasswordFill size={16} />
                                         </div>
                                         <input
@@ -216,7 +216,7 @@ export default function Register() {
                                 <div className="space-y-2 col-span-2 sm:col-span-1">
                                     <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest font-mono">Verify_Key</label>
                                     <div className="relative group">
-                                        <div className="absolute left-0 top-0 bottom-0 w-10 flex items-center justify-center text-gray-600 group-focus-within:text-purple-400 transition-colors border-r border-white/5 bg-white/5">
+                                        <div className="absolute left-0 top-0 bottom-0 w-10 flex items-center justify-center text-gray-600 group-focus-within:text-cyan-400 transition-colors border-r border-white/5 bg-white/5">
                                             <RiLockPasswordFill size={16} />
                                         </div>
                                         <input
@@ -245,8 +245,7 @@ export default function Register() {
                             <button
                                 type="submit"
                                 disabled={isLoading}
-                                className="w-full py-4 bg-white text-black font-black uppercase tracking-[0.2em] hover:bg-purple-400 transition-all active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-3 text-xs relative overflow-hidden group"
-                                style={{ clipPath: "polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)" }}
+                                className="w-full py-4 bg-cyan-500 text-black font-black uppercase tracking-[0.2em] hover:bg-cyan-400 transition-all active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-3 text-xs relative overflow-hidden group rounded-md"
                             >
                                 {isLoading ? (
                                     <>
@@ -255,7 +254,6 @@ export default function Register() {
                                     </>
                                 ) : (
                                     <>
-                                        <span className="absolute inset-0 bg-white group-hover:bg-purple-400 transition-colors duration-300"></span>
                                         <span className="relative z-10 flex items-center gap-2">
                                             <RiUserAddFill size={16} />
                                             <span>CREATE IDENTITY</span>

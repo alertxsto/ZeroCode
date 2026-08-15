@@ -33,7 +33,7 @@ export default class ErrorBoundary extends React.Component {
                         </p>
                         <button
                             onClick={this.handleReset}
-                            className="px-6 py-3 bg-white text-black text-xs font-bold uppercase tracking-widest hover:bg-cyan-400 transition-colors"
+                            className="px-6 py-3 bg-cyan-500 text-black text-xs font-bold uppercase tracking-widest hover:bg-cyan-400 transition-colors rounded-md"
                         >
                             Reload System
                         </button>

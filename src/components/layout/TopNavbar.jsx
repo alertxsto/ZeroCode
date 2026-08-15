@@ -12,7 +12,8 @@ import {
     RiShieldKeyholeLine,
     RiArrowDownSLine,
     RiRocketLine,
-    RiNodeTree
+    RiNodeTree,
+    RiHistoryLine
 } from 'react-icons/ri';
 import clsx from 'clsx';
 import logo from '../../assets/logo_z.png';
@@ -48,6 +49,7 @@ export default function TopNavbar() {
         { path: '/features', label: 'Features', icon: RiRocketLine },
         { path: '/community', label: 'Community', icon: RiDiscussLine },
         { path: '/leaderboard', label: 'Leaderboard', icon: RiTrophyLine },
+        { path: '/updates', label: 'Updates', icon: RiHistoryLine },
     ];
 
     return (

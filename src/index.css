@@ -264,3 +264,20 @@ pre {
 .animate-shimmer {
   animation: shimmer 2s infinite;
 }
+
+/* Global focus-visible ring for keyboard navigation */
+:focus-visible {
+  outline: none;
+}
+
+/* Accessibility: respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

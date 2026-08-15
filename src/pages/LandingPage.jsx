@@ -63,7 +63,7 @@ export default function LandingPage() {
                     {user ? (
                         <button
                             onClick={() => navigate('/dashboard')}
-                            className="px-6 py-2 bg-white text-black font-bold text-xs uppercase tracking-widest hover:bg-cyan-400 transition-colors"
+                            className="px-6 py-2 bg-cyan-500 text-black font-bold text-xs uppercase tracking-widest hover:bg-cyan-400 transition-colors"
                             style={{ clipPath: "polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%)" }}
                         >
                             Enter Dashboard

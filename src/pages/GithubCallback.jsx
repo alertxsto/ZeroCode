@@ -56,7 +56,7 @@ export default function GithubCallback() {
                         <p className="text-sm text-gray-400 border border-red-900/30 bg-red-900/10 p-3 rounded">{error}</p>
                         <button
                             onClick={() => navigate('/login')}
-                            className="px-6 py-2 bg-white text-black font-bold text-xs uppercase tracking-widest hover:bg-cyan-400 transition-colors mt-4"
+                            className="px-6 py-2 bg-cyan-500 text-black font-bold text-xs uppercase tracking-widest hover:bg-cyan-400 transition-colors mt-4 rounded-md"
                         >
                             Return to Login
                         </button>

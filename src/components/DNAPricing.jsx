@@ -126,12 +126,11 @@ function PricingCard({ plan, planKey, index, onSelect, user }) {
                     <button
                         onClick={() => onSelect(planKey)}
                         className={clsx(
-                            "w-full py-4 text-xs font-bold uppercase tracking-[0.2em] relative overflow-hidden group/btn transition-all duration-300",
-                            "bg-white/5 hover:bg-white/10 text-white border-t border-white/10"
+                            "w-full py-4 text-xs font-bold uppercase tracking-[0.2em] relative overflow-hidden group/btn transition-all duration-300 rounded-md active:scale-[0.98]",
+                            isPopular
+                                ? "bg-cyan-500 hover:bg-cyan-400 text-black"
+                                : "bg-white/5 hover:bg-white/10 text-white border border-white/10 hover:border-white/25"
                         )}
-                        style={{
-                            clipPath: "polygon(0 0, 100% 0, 100% 70%, 95% 100%, 0 100%)"
-                        }}
                     >
                         <span className="relative z-10 flex items-center justify-center gap-3">
                             <span className={clsx("w-1 h-4", bgColor)} />

@@ -174,9 +174,10 @@ export default function Login() {
 
                         {error && (
                             <motion.div
+                                role="alert"
                                 initial={{ opacity: 0, scale: 0.95 }}
                                 animate={{ opacity: 1, scale: 1 }}
-                                className="p-3 bg-red-500/10 border border-red-500/20 rounded-sm flex items-center gap-3"
+                                className="p-3 bg-red-500/10 border border-red-500/20 rounded-md flex items-center gap-3"
                             >
                                 <div className="w-1 h-1 rounded-full bg-red-500 animate-pulse"></div>
                                 <p className="text-red-400 text-xs font-mono">{error}</p>
@@ -231,8 +232,7 @@ export default function Login() {
                             <button
                                 type="submit"
                                 disabled={isLoading}
-                                className="w-full py-4 bg-white text-black font-black uppercase tracking-[0.2em] hover:bg-cyan-400 transition-all active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-3 text-xs relative overflow-hidden group"
-                                style={{ clipPath: "polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)" }}
+                                className="w-full py-4 bg-cyan-500 text-black font-black uppercase tracking-[0.2em] hover:bg-cyan-400 transition-all active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-3 text-xs relative overflow-hidden group rounded-md"
                             >
                                 {isLoading ? (
                                     <>
@@ -290,27 +290,23 @@ function SocialLoginButtons({ onGoogleSuccess, onGoogleError }) {
 
     return (
         <div className="grid grid-cols-2 gap-3">
-            {/* GOOGLE CYBERPUNK BUTTON */}
+            {/* GOOGLE BUTTON */}
             <button
                 type="button"
                 onClick={() => loginGoogle()}
-                className="relative group h-12 overflow-hidden"
-                style={{ clipPath: "polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)" }}
+                className="relative group h-12 overflow-hidden rounded-md border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/25 transition-all duration-300 active:scale-[0.98]"
             >
-                <div className="absolute inset-0 bg-white/5 border border-white/10 group-hover:border-white/30 transition-all duration-300"></div>
-                <div className="absolute inset-0 bg-white group-hover:bg-cyan-400 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>
-
                 <div className="relative flex items-center justify-center gap-2 h-full">
-                    <div className="p-1 bg-white rounded-full group-hover:bg-transparent transition-colors">
+                    <div className="p-1 bg-white rounded-full">
                         <img src="https://www.svgrepo.com/show/475656/google-color.svg" className="w-4 h-4" alt="G" />
                     </div>
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-gray-400 group-hover:text-black transition-colors">
+                    <span className="text-xs font-mono font-bold uppercase tracking-widest text-zinc-200 group-hover:text-white transition-colors">
                         Google
                     </span>
                 </div>
             </button>
 
-            {/* GITHUB CYBERPUNK BUTTON */}
+            {/* GITHUB BUTTON */}
             <button
                 type="button"
                 onClick={() => {
@@ -321,15 +317,11 @@ function SocialLoginButtons({ onGoogleSuccess, onGoogleError }) {
                     }
                     window.location.href = `https://github.com/login/oauth/authorize?client_id=${clientId}&scope=read:user user:email`;
                 }}
-                className="relative group h-12 overflow-hidden"
-                style={{ clipPath: "polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)" }}
+                className="relative group h-12 overflow-hidden rounded-md border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/25 transition-all duration-300 active:scale-[0.98]"
             >
-                <div className="absolute inset-0 bg-white/5 border border-white/10 group-hover:border-white/30 transition-all duration-300"></div>
-                <div className="absolute inset-0 bg-white group-hover:bg-cyan-400 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>
-
                 <div className="relative flex items-center justify-center gap-2 h-full">
-                    <RiGithubFill size={20} className="text-white group-hover:text-black transition-colors" />
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-gray-400 group-hover:text-black transition-colors">
+                    <RiGithubFill size={20} className="text-zinc-200 group-hover:text-white transition-colors" />
+                    <span className="text-xs font-mono font-bold uppercase tracking-widest text-zinc-200 group-hover:text-white transition-colors">
                         GitHub
                     </span>
                 </div>
