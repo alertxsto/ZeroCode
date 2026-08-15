@@ -45,7 +45,7 @@ const Changelog = () => {
         },
         {
             version: "2.7.0-beta.1",
-            date: "2026",
+            date: "Aug 10, 2026",
             type: "major",
             title: "Cyberpunk Authentication Protocol",
             icon: <FaShieldAlt className="text-purple-400 text-xl" />,
@@ -59,7 +59,7 @@ const Changelog = () => {
         },
         {
             version: "2.6.0-beta.1",
-            date: "Today",
+            date: "Aug 1, 2026",
             type: "major",
             title: "Cyberpunk Evolution & Beta Launch",
             icon: <FaRocket className="text-cyan-400 text-xl" />,
@@ -74,7 +74,7 @@ const Changelog = () => {
         },
         {
             version: "2.5.5",
-            date: "Today",
+            date: "Jul 25, 2026",
             type: "minor",
             title: "Identity Refresh & Stability",
             icon: <FaGem className="text-pink-400 text-xl" />,

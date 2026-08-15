@@ -50,7 +50,7 @@ Semua perubahan penting pada ZeroCode. Format mengikuti [Keep a Changelog](https
 - **Trust signals jujur**: hapus testimonial fiktif, achievements palsu, stats overclaim dari README; update repo ref `dkycdr` → `alertxsto`.
 - **Flow pembayaran WhatsApp lebih jelas**: pesan terstruktur + instruksi aktivasi 4 langkah di halaman Profile.
 
-## [2.7.0-beta.1] - 2026 (sebelumnya)
+## [2.7.0-beta.1] - 2026-08-10
 
 ### Added
 
@@ -59,7 +59,7 @@ Semua perubahan penting pada ZeroCode. Format mengikuti [Keep a Changelog](https
 - Syllabus Update: Enhanced DNA Background visibility and 'Data Panel' containers.
 - Security: Visual enhancements for authentication terminals.
 
-## [2.6.0-beta.1] - 2026 (sebelumnya)
+## [2.6.0-beta.1] - 2026-08-01
 
 ### Added
 
@@ -69,7 +69,7 @@ Semua perubahan penting pada ZeroCode. Format mengikuti [Keep a Changelog](https
 - Visual Upgrade: Neon Grid Systems, Glitch Typography, and Holo-Terminal Previews.
 - Performance: Optimized Canvas rendering for smooth 60fps animations.
 
-## [2.5.5] - 2026 (sebelumnya)
+## [2.5.5] - 2026-07-25
 
 ### Fixed
 
