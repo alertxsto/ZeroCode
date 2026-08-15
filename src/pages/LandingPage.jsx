@@ -6,7 +6,7 @@ import { RiVipCrownFill, RiCheckFill, RiGithubFill } from 'react-icons/ri';
 import clsx from 'clsx';
 import DNAPricing from '../components/DNAPricing';
 import TechStackCarousel from '../components/TechStackCarousel';
-import { PRICING, buildPurchaseMessage, whatsappLink } from '../lib/pricing';
+import { PRICING, WHATSAPP_NUMBER, buildPurchaseMessage, whatsappLink } from '../lib/pricing';
 
 export default function LandingPage() {
     const navigate = useNavigate();
