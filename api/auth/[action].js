@@ -25,6 +25,9 @@ export default async function handler(req, res) {
     const action = req.query.action;
     const body = req.body || {};
 
+    // Log method + action for debugging proxy behavior
+    console.log(`[auth] method=${req.method} action=${action}`);
+
     switch (action) {
         case 'register':
             return handleRegister(req, res, body);
