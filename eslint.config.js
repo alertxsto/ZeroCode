@@ -28,7 +28,7 @@ export default defineConfig([
   },
   {
     // Serverless functions and shared server code run in Node, not the browser
-    files: ['api/**/*.js', 'shared/**/*.js'],
+    files: ['api/**/*.js', 'shared/**/*.js', 'tests/**/*.js'],
     languageOptions: {
       globals: globals.node,
     },

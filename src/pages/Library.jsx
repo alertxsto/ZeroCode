@@ -3,7 +3,7 @@ import AppLayout from '../components/layout/AppLayout';
 import { useProgress } from '../contexts/ProgressProvider';
 import {
     BookOpen, ExternalLink, Search, Code, Palette, Terminal,
-    Database, FileText, Video, Globe, Github, Zap
+    Database, FileText, Video, Globe, GitBranch, Zap
 } from 'lucide-react';
 import clsx from 'clsx';
 
@@ -25,7 +25,7 @@ const RESOURCES = [
 
     // Tools
     { id: 6, title: 'VS Code', desc: 'Primary code editor. Integrated Development Environment.', url: 'https://code.visualstudio.com', category: 'tools', icon: <Code size={20} className="text-blue-400" /> },
-    { id: 7, title: 'GitHub', desc: 'Version Control System. Code alignment and collaboration.', url: 'https://github.com', category: 'tools', icon: <Github size={20} className="text-white" /> },
+    { id: 7, title: 'GitHub', desc: 'Version Control System. Code alignment and collaboration.', url: 'https://github.com', category: 'tools', icon: <GitBranch size={20} className="text-white" /> },
     { id: 8, title: 'Figma', desc: 'Interface design tool. Prototyping and vector graphics.', url: 'https://figma.com', category: 'tools', icon: <Palette size={20} className="text-purple-400" /> },
     { id: 9, title: 'Postman', desc: 'API testing suite. Endpoint verification tools.', url: 'https://postman.com', category: 'tools', icon: <Terminal size={20} className="text-orange-400" /> },
     { id: 10, title: 'Vercel', desc: 'Deployment platform. Edge network distribution.', url: 'https://vercel.com', category: 'tools', icon: <Globe size={20} className="text-white" /> },
