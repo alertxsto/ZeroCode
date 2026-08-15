@@ -1,5 +1,5 @@
-import { sql } from './_lib/db.js';
-import { requireUser } from './_lib/auth.js';
+import { sql } from '../shared/_lib/db.js';
+import { requireUser } from '../shared/_lib/auth.js';
 
 const SAFE_USER_COLUMNS = [
     'id', 'email', 'name', 'phone', 'avatar', 'border', 'is_admin', 'subscription_tier',

@@ -4,12 +4,12 @@
 //   /api/auth/github, /api/auth/request-password-reset, /api/auth/reset-password
 // Consolidates 10 serverless functions into 1 (Vercel Hobby 12-fn limit).
 
-import { sql } from '../_lib/db.js';
+import { sql } from '../../shared/_lib/db.js';
 import bcrypt from 'bcryptjs';
 import { generateVerificationCode } from '../../src/lib/emailService.js';
-import { sendVerificationEmail, sendWelcomeEmail, sendPasswordResetEmail } from '../_lib/email.js';
-import { createSession, deleteSession, requireUser } from '../_lib/auth.js';
-import { rateLimitAuth, rateLimitStrict } from '../_lib/rateLimit.js';
+import { sendVerificationEmail, sendWelcomeEmail, sendPasswordResetEmail } from '../../shared/_lib/email.js';
+import { createSession, deleteSession, requireUser } from '../../shared/_lib/auth.js';
+import { rateLimitAuth, rateLimitStrict } from '../../shared/_lib/rateLimit.js';
 
 const SAFE_USER_COLUMNS = [
     'id', 'email', 'name', 'phone', 'avatar', 'border', 'is_admin', 'subscription_tier',

@@ -2,8 +2,8 @@
 //   /api/stats/focus (GET)
 // Consolidates stats endpoints into 1 (Vercel Hobby 12-fn limit).
 
-import { sql } from '../_lib/db.js';
-import { requireUser } from '../_lib/auth.js';
+import { sql } from '../shared/_lib/db.js';
+import { requireUser } from '../shared/_lib/auth.js';
 
 export default async function handler(req, res) {
     if (req.method === 'OPTIONS') {

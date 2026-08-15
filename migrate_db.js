@@ -1,4 +1,4 @@
-import { sql } from './api/_lib/db.js';
+import { sql } from './shared/_lib/db.js';
 
 const runMigration = async () => {
     try {
