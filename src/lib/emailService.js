@@ -16,7 +16,7 @@ const getAppUrl = () => {
 // Send verification email via backend API
 export const sendVerificationEmail = async (email, verificationCode) => {
     try {
-        const response = await fetch('/api/email/verification', {
+        const response = await fetch('/api/email?type=verification', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ export const sendPasswordResetEmail = async (email, resetCode) => {
     try {
         const resetLink = `${getAppUrl()}/reset-password?code=${resetCode}&email=${encodeURIComponent(email)}`;
 
-        const response = await fetch('/api/email/password-reset', {
+        const response = await fetch('/api/email?type=password-reset', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ export const sendPasswordResetEmail = async (email, resetCode) => {
 // Send welcome email via backend API
 export const sendWelcomeEmail = async (email, name) => {
     try {
-        const response = await fetch('/api/email/welcome', {
+        const response = await fetch('/api/email?type=welcome', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

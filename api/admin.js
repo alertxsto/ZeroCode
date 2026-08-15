@@ -3,9 +3,9 @@
 //   /api/admin/promote (POST)
 // Consolidates 3 serverless functions into 1 (Vercel Hobby 12-fn limit).
 
-import { sql } from '../../shared/_lib/db.js';
-import { requireAdmin, requireUser } from '../../shared/_lib/auth.js';
-import { rateLimitStrict } from '../../shared/_lib/rateLimit.js';
+import { sql } from '../shared/_lib/db.js';
+import { requireAdmin, requireUser } from '../shared/_lib/auth.js';
+import { rateLimitStrict } from '../shared/_lib/rateLimit.js';
 
 export default async function handler(req, res) {
     if (req.method === 'OPTIONS') {

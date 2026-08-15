@@ -71,9 +71,9 @@ export default function AdminDashboard() {
 
         try {
             const [usersRes, analyticsRes, logsRes] = await Promise.allSettled([
-                apiFetch(`/api/admin/users${finalQuery ? `?search=${encodeURIComponent(finalQuery)}` : ''}`),
-                apiFetch('/api/admin/analytics'),
-                apiFetch('/api/admin/analytics'),
+                apiFetch(`/api/admin?action=users${finalQuery ? `&search=${encodeURIComponent(finalQuery)}` : ''}`),
+                apiFetch('/api/admin?action=analytics'),
+                apiFetch('/api/admin?action=analytics'),
             ]);
 
             if (usersRes.status === 'fulfilled' && usersRes.value.success) {
@@ -124,7 +124,7 @@ export default function AdminDashboard() {
 
         setUpdating(true);
         try {
-            await apiFetch('/api/admin/users', {
+            await apiFetch('/api/admin?action=users', {
                 method: 'PATCH',
                 body: { userId, tier }
             });

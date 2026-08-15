@@ -50,7 +50,7 @@ export default function FocusDetailModal({ isOpen, onClose }) {
             setLoading(true);
             try {
                 // Per-course breakdown scoped to the authenticated user (server-side)
-                const data = await apiFetch('/api/stats/focus');
+                const data = await apiFetch('/api/stats?resource=focus');
                 const result = data.focusLog || [];
 
                 // Group by course

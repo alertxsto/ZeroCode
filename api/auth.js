@@ -1,15 +1,16 @@
-// Consolidated auth endpoints via dynamic route:
-//   /api/auth/register, /api/auth/login, /api/auth/logout, /api/auth/me,
-//   /api/auth/verify-email, /api/auth/resend-code, /api/auth/google,
-//   /api/auth/github, /api/auth/request-password-reset, /api/auth/reset-password
+// Consolidated auth endpoints via query param:
+//   /api/auth?action=register|login|logout|me|verify-email|resend-code|
+//                  google|github|request-password-reset|reset-password
 // Consolidates 10 serverless functions into 1 (Vercel Hobby 12-fn limit).
+// Uses a flat file (no [bracket] routes) because Vercel does not reliably
+// register bracket-path serverless functions.
 
-import { sql } from '../../shared/_lib/db.js';
+import { sql } from '../shared/_lib/db.js';
 import bcrypt from 'bcryptjs';
-import { generateVerificationCode } from '../../src/lib/emailService.js';
-import { sendVerificationEmail, sendWelcomeEmail, sendPasswordResetEmail } from '../../shared/_lib/email.js';
-import { createSession, deleteSession, requireUser } from '../../shared/_lib/auth.js';
-import { rateLimitAuth, rateLimitStrict } from '../../shared/_lib/rateLimit.js';
+import { generateVerificationCode } from '../src/lib/emailService.js';
+import { sendVerificationEmail, sendWelcomeEmail, sendPasswordResetEmail } from '../shared/_lib/email.js';
+import { createSession, deleteSession, requireUser } from '../shared/_lib/auth.js';
+import { rateLimitAuth, rateLimitStrict } from '../shared/_lib/rateLimit.js';
 
 const SAFE_USER_COLUMNS = [
     'id', 'email', 'name', 'phone', 'avatar', 'border', 'is_admin', 'subscription_tier',

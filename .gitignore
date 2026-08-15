@@ -35,3 +35,5 @@ setup-password-reset.js
 setup-admin-simple.js
 setup-admin-progress.js
 setup-admin-accounts.js
+.vercel
+.env*

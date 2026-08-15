@@ -88,7 +88,7 @@ export const AuthProvider = ({ children }) => {
                 return;
             }
             try {
-                const data = await apiFetch('/api/auth/me');
+                const data = await apiFetch('/api/auth?action=me');
                 persistUser(data.user);
                 setUser(data.user);
             } catch {
@@ -105,7 +105,7 @@ export const AuthProvider = ({ children }) => {
 
     const register = async (userData, password) => {
         try {
-            const data = await apiFetch('/api/auth/register', {
+            const data = await apiFetch('/api/auth?action=register', {
                 method: 'POST',
                 auth: false,
                 body: { email: userData.email, password, name: userData.name }
@@ -121,7 +121,7 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (email, password) => {
         try {
-            const data = await apiFetch('/api/auth/login', {
+            const data = await apiFetch('/api/auth?action=login', {
                 method: 'POST',
                 auth: false,
                 body: { email, password }
@@ -137,7 +137,7 @@ export const AuthProvider = ({ children }) => {
 
     const logout = async () => {
         try {
-            await apiFetch('/api/auth/logout', { method: 'POST' });
+            await apiFetch('/api/auth?action=logout', { method: 'POST' });
         } catch {
             // Ignore logout API errors — always clear local session
         }
@@ -163,7 +163,7 @@ export const AuthProvider = ({ children }) => {
     const refreshUser = async () => {
         if (!getToken()) return;
         try {
-            const data = await apiFetch('/api/auth/me');
+            const data = await apiFetch('/api/auth?action=me');
             persistUser(data.user);
             setUser(data.user);
         } catch (error) {
@@ -173,7 +173,7 @@ export const AuthProvider = ({ children }) => {
 
     const verifyAdminCode = async (code) => {
         try {
-            const data = await apiFetch('/api/admin/promote', {
+            const data = await apiFetch('/api/admin?action=promote', {
                 method: 'POST',
                 body: { code }
             });
@@ -187,14 +187,14 @@ export const AuthProvider = ({ children }) => {
 
     const verifyEmail = async (email, code) => {
         try {
-            const data = await apiFetch('/api/auth/verify-email', {
+            const data = await apiFetch('/api/auth?action=verify-email', {
                 method: 'POST',
                 auth: false,
                 body: { email, code }
             });
             // Verification creates a fresh session
             if (data.token) setToken(data.token);
-            const me = await apiFetch('/api/auth/me');
+            const me = await apiFetch('/api/auth?action=me');
             persistUser(me.user);
             setUser(me.user);
             return { success: true, user: me.user };
@@ -205,7 +205,7 @@ export const AuthProvider = ({ children }) => {
 
     const resendVerificationCode = async (email) => {
         try {
-            const data = await apiFetch('/api/auth/resend-code', {
+            const data = await apiFetch('/api/auth?action=resend-code', {
                 method: 'POST',
                 auth: false,
                 body: { email }
@@ -218,7 +218,7 @@ export const AuthProvider = ({ children }) => {
 
     const requestPasswordReset = async (email) => {
         try {
-            const data = await apiFetch('/api/auth/request-password-reset', {
+            const data = await apiFetch('/api/auth?action=request-password-reset', {
                 method: 'POST',
                 auth: false,
                 body: { email }
@@ -231,7 +231,7 @@ export const AuthProvider = ({ children }) => {
 
     const resetPassword = async (email, code, newPassword) => {
         try {
-            const data = await apiFetch('/api/auth/reset-password', {
+            const data = await apiFetch('/api/auth?action=reset-password', {
                 method: 'POST',
                 auth: false,
                 body: { email, code, newPassword }
@@ -250,7 +250,7 @@ export const AuthProvider = ({ children }) => {
             if (!accessToken) {
                 return { success: false, error: 'Missing Google access token' };
             }
-            const data = await apiFetch('/api/auth/google', {
+            const data = await apiFetch('/api/auth?action=google', {
                 method: 'POST',
                 auth: false,
                 body: { accessToken }
@@ -265,12 +265,12 @@ export const AuthProvider = ({ children }) => {
     };
 
     const loginWithGithub = async (githubProfile) => {
-        // GitHub flow now exchanges the code server-side via /api/auth/github.
+        // GitHub flow now exchanges the code server-side via /api/auth?action=github.
         // This method receives the raw OAuth code.
         try {
             if (typeof githubProfile === 'string') {
                 // Called with just the code from GithubCallback
-                const data = await apiFetch('/api/auth/github', {
+                const data = await apiFetch('/api/auth?action=github', {
                     method: 'POST',
                     auth: false,
                     body: { code: githubProfile }
