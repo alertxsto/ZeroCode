@@ -37,19 +37,22 @@ if (typeof setInterval !== 'undefined') {
     }, 10 * 60 * 1000).unref?.();
 }
 
-// Standard helper for auth-ish endpoints
-export function rateLimitAuth(req, res, next) {
+// Standard helper for auth-ish endpoints.
+// Returns true if allowed, false if rate-limited (response already sent).
+export function rateLimitAuth(req, res) {
     const ip = req.headers['x-forwarded-for']?.split(',')[0]?.trim() || req.socket?.remoteAddress || 'unknown';
     if (!rateLimit(`auth:${ip}`, 20, 10 * 60 * 1000)) {
-        return res.status(429).json({ success: false, error: 'Too many requests. Try again later.' });
+        res.status(429).json({ success: false, error: 'Too many requests. Try again later.' });
+        return false;
     }
-    return next();
+    return true;
 }
 
-export function rateLimitStrict(req, res, next) {
+export function rateLimitStrict(req, res) {
     const ip = req.headers['x-forwarded-for']?.split(',')[0]?.trim() || req.socket?.remoteAddress || 'unknown';
     if (!rateLimit(`strict:${ip}`, 5, 15 * 60 * 1000)) {
-        return res.status(429).json({ success: false, error: 'Too many attempts. Try again later.' });
+        res.status(429).json({ success: false, error: 'Too many attempts. Try again later.' });
+        return false;
     }
-    return next();
+    return true;
 }

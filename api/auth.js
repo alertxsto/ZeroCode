@@ -59,7 +59,7 @@ export default async function handler(req, res) {
 
 async function handleRegister(req, res, { email, password, name }) {
     if (req.method !== 'POST') return res.status(405).json({ success: false, error: 'Method not allowed' });
-    if (!rateLimitAuth(req, res, () => {})) return;
+    if (!rateLimitAuth(req, res)) return;
 
     if (!email || !password || !name) {
         return res.status(400).json({ success: false, error: 'Missing required fields' });
@@ -99,7 +99,7 @@ async function handleRegister(req, res, { email, password, name }) {
 
 async function handleLogin(req, res, { email, password }) {
     if (req.method !== 'POST') return res.status(405).json({ success: false, error: 'Method not allowed' });
-    if (!rateLimitAuth(req, res, () => {})) return;
+    if (!rateLimitAuth(req, res)) return;
 
     if (!email || !password) {
         return res.status(400).json({ success: false, error: 'Missing email or password' });
@@ -176,7 +176,7 @@ async function handleMe(req, res) {
 
 async function handleVerifyEmail(req, res, { email, code }) {
     if (req.method !== 'POST') return res.status(405).json({ success: false, error: 'Method not allowed' });
-    if (!rateLimitStrict(req, res, () => {})) return;
+    if (!rateLimitStrict(req, res)) return;
 
     if (!email || !code) {
         return res.status(400).json({ success: false, error: 'Missing email or code' });
@@ -227,7 +227,7 @@ async function handleVerifyEmail(req, res, { email, code }) {
 
 async function handleResendCode(req, res, { email }) {
     if (req.method !== 'POST') return res.status(405).json({ success: false, error: 'Method not allowed' });
-    if (!rateLimitAuth(req, res, () => {})) return;
+    if (!rateLimitAuth(req, res)) return;
 
     if (!email) {
         return res.status(400).json({ success: false, error: 'Missing email' });
@@ -264,7 +264,7 @@ async function handleResendCode(req, res, { email }) {
 
 async function handleGoogle(req, res, { accessToken }) {
     if (req.method !== 'POST') return res.status(405).json({ success: false, error: 'Method not allowed' });
-    if (!rateLimitAuth(req, res, () => {})) return;
+    if (!rateLimitAuth(req, res)) return;
 
     if (!accessToken) {
         return res.status(400).json({ success: false, error: 'Missing access token' });
@@ -334,7 +334,7 @@ async function handleGoogle(req, res, { accessToken }) {
 
 async function handleGithub(req, res, { code }) {
     if (req.method !== 'POST') return res.status(405).json({ success: false, error: 'Method not allowed' });
-    if (!rateLimitAuth(req, res, () => {})) return;
+    if (!rateLimitAuth(req, res)) return;
 
     if (!code) {
         return res.status(400).json({ success: false, error: 'Missing authorization code' });
@@ -431,7 +431,7 @@ async function handleGithub(req, res, { code }) {
 
 async function handleRequestPasswordReset(req, res, { email }) {
     if (req.method !== 'POST') return res.status(405).json({ success: false, error: 'Method not allowed' });
-    if (!rateLimitAuth(req, res, () => {})) return;
+    if (!rateLimitAuth(req, res)) return;
 
     if (!email) {
         return res.status(400).json({ success: false, error: 'Missing email' });
@@ -468,7 +468,7 @@ async function handleRequestPasswordReset(req, res, { email }) {
 
 async function handleResetPassword(req, res, { email, code, newPassword }) {
     if (req.method !== 'POST') return res.status(405).json({ success: false, error: 'Method not allowed' });
-    if (!rateLimitStrict(req, res, () => {})) return;
+    if (!rateLimitStrict(req, res)) return;
 
     if (!email || !code || !newPassword) {
         return res.status(400).json({ success: false, error: 'Missing required fields' });

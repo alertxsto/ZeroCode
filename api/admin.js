@@ -162,7 +162,7 @@ async function handleAnalytics(req, res) {
 
 async function handlePromote(req, res, { code }) {
     if (req.method !== 'POST') return res.status(405).json({ success: false, error: 'Method not allowed' });
-    if (!rateLimitStrict(req, res, () => {})) return;
+    if (!rateLimitStrict(req, res)) return;
 
     const user = await requireUser(req, res);
     if (!user) return;

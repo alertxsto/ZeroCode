@@ -12,7 +12,7 @@ export default async function handler(req, res) {
     if (req.method !== 'POST') {
         return res.status(405).json({ success: false, error: 'Method not allowed' });
     }
-    if (!rateLimitAuth(req, res, () => {})) return;
+    if (!rateLimitAuth(req, res)) return;
 
     const type = req.query.type;
     const { email, verificationCode, resetCode, name } = req.body || {};
