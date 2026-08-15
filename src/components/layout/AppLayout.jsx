@@ -3,7 +3,7 @@ import clsx from 'clsx';
 
 export default function AppLayout({ children, fullWidth = false }) {
     return (
-        <div className="min-h-screen bg-zinc-950 text-zinc-100 font-sans antialiased selection:bg-indigo-500/30">
+        <div className="min-h-screen bg-zinc-950 text-zinc-100 font-sans antialiased selection:bg-indigo-500/30 overflow-x-hidden">
             <TopNavbar />
             <main className={clsx(
                 "transition-all duration-300",
