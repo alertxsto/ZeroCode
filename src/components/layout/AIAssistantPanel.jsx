@@ -3,7 +3,7 @@ import { RiCloseLine, RiSendPlaneFill } from 'react-icons/ri';
 import { Bot, Sparkles, Zap, Activity, Cpu, Code, Bug, ArrowRight, Terminal } from 'lucide-react';
 import clsx from 'clsx';
 import ReactMarkdown from 'react-markdown';
-import { aiService } from '../../lib/aiService';
+import { geminiService } from '../../lib/geminiService';
 
 export default function AIAssistantPanel({ isOpen, onClose, currentCode = "", taskDescription = "" }) {
     const [messages, setMessages] = useState([
@@ -32,7 +32,7 @@ export default function AIAssistantPanel({ isOpen, onClose, currentCode = "", ta
 
         try {
             const context = `Task: ${taskDescription}\n\nCurrent Code:\n\`\`\`\n${currentCode}\n\`\`\``.trim();
-            const response = await aiService.getChatResponse(textToSend, context);
+            const response = await geminiService.getResponse(textToSend, context);
             setMessages(prev => [...prev, { role: 'assistant', content: response }]);
         } catch (error) {
             setMessages(prev => [...prev, { role: 'assistant', content: "CRITICAL_ERROR: Neural path collapsed. Re-authenticate uplink." }]);
