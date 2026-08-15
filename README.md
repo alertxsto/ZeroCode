@@ -16,7 +16,7 @@
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
-<img src="https://img.shields.io/badge/VERSION-2.7.0--beta.1-00ff9f?style=for-the-badge&logo=v&logoColor=white&labelColor=0a0e27" alt="Version"/>
+<img src="https://img.shields.io/badge/VERSION-2.8.0--beta.1-00ff9f?style=for-the-badge&logo=v&logoColor=white&labelColor=0a0e27" alt="Version"/>
 <img src="https://img.shields.io/badge/COURSES-19-00d9ff?style=for-the-badge&logo=bookstack&logoColor=white&labelColor=0a0e27" alt="Courses"/>
 <img src="https://img.shields.io/badge/TECH-React%2019-61dafb?style=for-the-badge&logo=react&logoColor=white&labelColor=0a0e27" alt="React"/>
 <img src="https://img.shields.io/badge/STATUS-ONLINE-00ff9f?style=for-the-badge&logo=statuspage&logoColor=white&labelColor=0a0e27" alt="Status"/>

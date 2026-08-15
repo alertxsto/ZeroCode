@@ -13,13 +13,39 @@ const Changelog = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        localStorage.setItem('last_viewed_update', '2.6.0-beta.1');
+        localStorage.setItem('last_viewed_update', '2.8.0-beta.1');
     }, []);
 
     const updates = [
         {
+            version: "2.8.0-beta.1",
+            date: "Aug 15, 2026",
+            type: "major",
+            title: "Security Hardening & Performance",
+            icon: <FaShieldAlt className="text-emerald-400 text-xl" />,
+            color: "border-emerald-500/50 bg-emerald-500/10 text-emerald-400",
+            changes: [
+                "Full Backend Serverization: all DB queries moved from browser to serverless API with opaque session tokens.",
+                "Server-side authorization on every endpoint (userId from token, not request body).",
+                "Admin access enforced server-side; admin secret code no longer exposed to client.",
+                "Rate limiting on all auth endpoints (login, register, verify, reset).",
+                "Google & GitHub OAuth verified server-side.",
+                "Removed /migrate route that could drop tables.",
+                "Fixed auth hang bug (504): rate limit helpers now return booleans.",
+                "Fixed blank landing page (WHATSAPP_NUMBER ReferenceError).",
+                "Fixed undefined version bug in course completion.",
+                "Error Boundary: one page crash no longer blanks the whole app.",
+                "Code Splitting: main bundle 6.7MB → 3.8MB. Monaco/mermaid/3D load on demand.",
+                "Consistent pricing across landing, admin, and AI assistant (Starter 50K / Developer 75K / Professional 80K / Master 164K).",
+                "SEO: sitemap.xml, robots.txt, og:image, canonical, locale id_ID.",
+                "Dependency security: nodemailer 7→9 (6 advisories fixed), framer-motion 13, lucide-react 1.31.",
+                "Testing: Vitest suite (15 tests) for rate limiter, token hashing, and pricing.",
+                "Removed dead code: Groq aiService (unified on Gemini), supabase, resend."
+            ]
+        },
+        {
             version: "2.7.0-beta.1",
-            date: "Today",
+            date: "2026",
             type: "major",
             title: "Cyberpunk Authentication Protocol",
             icon: <FaShieldAlt className="text-purple-400 text-xl" />,
@@ -205,7 +231,7 @@ const Changelog = () => {
                             <div className="hidden md:block">
                                 <div className="px-4 py-2 border border-slate-700 rounded-lg bg-slate-900/50 text-right">
                                     <p className="text-xs text-slate-500 font-mono uppercase">Current Version</p>
-                                    <p className="text-xl font-bold text-cyan-400 font-mono">v2.7.0-beta.1</p>
+                                    <p className="text-xl font-bold text-cyan-400 font-mono">v2.8.0-beta.1</p>
                                 </div>
                             </div>
                         </div>

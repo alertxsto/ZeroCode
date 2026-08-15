@@ -55,7 +55,7 @@ export default function LandingPage() {
                             </span>
                             <span className="flex items-center gap-2">
                                 <span className="w-1.5 h-1.5 bg-cyan-500 rounded-full" />
-                                VER: 2.7.0-beta.1
+                                VER: 2.8.0-beta.1
                             </span>
                         </div>
                     </div>

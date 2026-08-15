@@ -548,7 +548,7 @@ export default function Profile() {
                                 </div>
                                 <div className="flex justify-between text-xs">
                                     <span className="text-gray-600 font-mono">SYS_VER</span>
-                                    <span className="font-mono text-cyan-500">v2.7.0.BETA</span>
+                                    <span className="font-mono text-cyan-500">v2.8.0.BETA</span>
                                 </div>
                             </div>
                         </div>

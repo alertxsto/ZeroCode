@@ -124,7 +124,7 @@ export default function Login() {
                     {/* Stats Grid */}
                     <div className="grid grid-cols-3 gap-8 mt-12 border-t border-white/10 pt-8 max-w-md mx-auto">
                         <div>
-                            <div className="text-xl font-bold text-white font-mono">2.7.0</div>
+                            <div className="text-xl font-bold text-white font-mono">2.8.0</div>
                             <div className="text-[9px] text-gray-500 uppercase tracking-widest mt-1">Version</div>
                         </div>
                         <div>
